@@ -1,0 +1,15 @@
+name: translation_engine_baidu
+description:
+version: 0.0.1
+author:
+homepage:
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  http: any
+  uni_translate_client: ^0.0.1
+
+dev_dependencies:
+  test: ^1.0.0
