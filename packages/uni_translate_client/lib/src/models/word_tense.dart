@@ -8,17 +8,10 @@ class WordTense {
   factory WordTense.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
 
-    List<String> values;
-
-    if (json['values'] != null) {
-      Iterable l = json['values'] as List;
-      values = l.map((item) => item.toString()).toList();
-    }
-
     return WordTense(
       type: json['type'],
       name: json['name'],
-      values: values,
+      values: List<String>.from(json['values']),
     );
   }
 

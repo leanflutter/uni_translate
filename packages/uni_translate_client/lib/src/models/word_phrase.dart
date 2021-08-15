@@ -13,7 +13,7 @@ class WordPhrase {
 
     return WordPhrase(
       text: json['text'],
-      translations: json['translations'],
+      translations: List<String>.from(json['translations']),
     );
   }
 

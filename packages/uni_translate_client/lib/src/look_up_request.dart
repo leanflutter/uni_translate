@@ -4,9 +4,9 @@ class LookUpRequest extends TranslateRequest {
   final String word;
 
   LookUpRequest({
-    this.word,
     String sourceLanguage,
     String targetLanguage,
+    this.word,
   }) : super(
           sourceLanguage: sourceLanguage,
           targetLanguage: targetLanguage,
@@ -16,12 +16,16 @@ class LookUpRequest extends TranslateRequest {
     if (json == null) return null;
 
     return LookUpRequest(
+      sourceLanguage: json['sourceLanguage'],
+      targetLanguage: json['targetLanguage'],
       word: json['word'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
+      'sourceLanguage': sourceLanguage,
+      'targetLanguage': targetLanguage,
       'word': word,
     };
   }

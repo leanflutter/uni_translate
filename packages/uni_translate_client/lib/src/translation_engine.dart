@@ -14,6 +14,7 @@ class TranslationEngineConfig {
   String type;
   String name;
   Map<String, dynamic> option;
+  List<String> supportedScopes;
   List<String> disabledScopes;
   bool disabled = false;
 
@@ -24,6 +25,7 @@ class TranslationEngineConfig {
     this.type,
     this.name,
     this.option,
+    this.supportedScopes,
     this.disabledScopes,
     this.disabled = false,
   });
@@ -38,6 +40,9 @@ class TranslationEngineConfig {
       option: json['option'] != null
           ? Map<String, dynamic>.from(json['option'])
           : null,
+      supportedScopes: json['supportedScopes'] != null
+          ? List<String>.from(json['supportedScopes'])
+          : null,
       disabledScopes: json['disabledScopes'] != null
           ? List<String>.from(json['disabledScopes'])
           : null,
@@ -50,6 +55,7 @@ class TranslationEngineConfig {
       'identifier': identifier,
       'type': type,
       'option': option,
+      'supportedScopes': supportedScopes,
       'disabledScopes': disabledScopes,
       'disabled': disabled ?? false,
     };
@@ -63,12 +69,8 @@ abstract class TranslationEngine {
   String get type => config.type;
   String get name => config.name;
   Map<String, dynamic> get option => config.option;
-  List<String> get supportedScopes => [
-        kScopeDetectLanguage,
-        kScopeLookUp,
-        kScopeTranslate,
-      ];
-  List<String> get disabledScopes => config.disabledScopes;
+  List<String> get supportedScopes => config.supportedScopes ?? [];
+  List<String> get disabledScopes => config.disabledScopes ?? [];
   bool get disabled => config.disabled ?? false;
 
   TranslationEngine(this.config);

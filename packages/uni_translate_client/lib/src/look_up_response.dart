@@ -37,9 +37,60 @@ class LookUpResponse extends TranslateResponse {
   factory LookUpResponse.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
 
+    List<TextTranslation> translations;
+    List<WordTag> tags;
+    List<WordDefinition> definitions;
+    List<WordPronunciation> pronunciations;
+    List<WordImage> images;
+    List<WordPhrase> phrases;
+    List<WordTense> tenses;
+    List<WordSentence> sentences;
+
+    if (json['translations'] != null) {
+      Iterable l = json['translations'] as List;
+      translations = l.map((item) => TextTranslation.fromJson(item)).toList();
+    }
+    if (json['tags'] != null) {
+      Iterable l = json['tags'] as List;
+      tags = l.map((item) => WordTag.fromJson(item)).toList();
+    }
+    if (json['definitions'] != null) {
+      Iterable l = json['definitions'] as List;
+      definitions = l.map((item) => WordDefinition.fromJson(item)).toList();
+    }
+    if (json['pronunciations'] != null) {
+      Iterable l = json['pronunciations'] as List;
+      pronunciations =
+          l.map((item) => WordPronunciation.fromJson(item)).toList();
+    }
+    if (json['images'] != null) {
+      Iterable l = json['images'] as List;
+      images = l.map((item) => WordImage.fromJson(item)).toList();
+    }
+    if (json['phrases'] != null) {
+      Iterable l = json['phrases'] as List;
+      phrases = l.map((item) => WordPhrase.fromJson(item)).toList();
+    }
+    if (json['tenses'] != null) {
+      Iterable l = json['tenses'] as List;
+      tenses = l.map((item) => WordTense.fromJson(item)).toList();
+    }
+    if (json['sentences'] != null) {
+      Iterable l = json['sentences'] as List;
+      sentences = l.map((item) => WordSentence.fromJson(item)).toList();
+    }
+
     return LookUpResponse(
+      translations: translations,
       word: json['word'],
       tip: json['tip'],
+      tags: tags,
+      definitions: definitions,
+      pronunciations: pronunciations,
+      images: images,
+      phrases: phrases,
+      tenses: tenses,
+      sentences: sentences,
     );
   }
 

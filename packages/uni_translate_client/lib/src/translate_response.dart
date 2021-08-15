@@ -9,7 +9,13 @@ class TranslateResponse {
 
   factory TranslateResponse.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
+
     List<TextTranslation> translations;
+
+    if (json['translations'] != null) {
+      Iterable l = json['translations'] as List;
+      translations = l.map((item) => TextTranslation.fromJson(item)).toList();
+    }
 
     return TranslateResponse(
       translations: translations,

@@ -12,7 +12,7 @@ class WordSentence {
 
     return WordSentence(
       text: json['text'],
-      translations: json['translations'],
+      translations: List<String>.from(json['translations']),
     );
   }
 

@@ -10,8 +10,15 @@ class DetectLanguageResponse {
   factory DetectLanguageResponse.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
 
+    List<TextDetection> detections;
+
+    if (json['detections'] != null) {
+      Iterable l = json['detections'] as List;
+      detections = l.map((item) => TextDetection.fromJson(item)).toList();
+    }
+
     return DetectLanguageResponse(
-      detections: json['detections'],
+      detections: detections,
     );
   }
 
