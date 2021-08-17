@@ -330,6 +330,13 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  translation_engine_google:
+    dependency: "direct main"
+    description:
+      path: "../translation_engine_google"
+      relative: true
+    source: path
+    version: "0.0.1"
   translation_engine_iciba:
     dependency: "direct main"
     description:
@@ -368,9 +375,9 @@ packages:
   uni_translate_client:
     dependency: "direct main"
     description:
-      path: "../uni_translate_client"
-      relative: true
-    source: path
+      name: uni_translate_client
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.1"
   vm_service:
     dependency: transitive

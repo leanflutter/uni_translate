@@ -16,6 +16,8 @@ dependencies:
     path: ../translation_engine_cloudoptai
   translation_engine_deepl:
     path: ../translation_engine_deepl
+  translation_engine_google:
+    path: ../translation_engine_google
   translation_engine_iciba:
     path: ../translation_engine_iciba
   translation_engine_sogou:
