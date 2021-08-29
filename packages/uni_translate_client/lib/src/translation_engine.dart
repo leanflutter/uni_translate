@@ -4,6 +4,7 @@ import 'look_up_request.dart';
 import 'look_up_response.dart';
 import 'translate_request.dart';
 import 'translate_response.dart';
+import 'models/language_pair.dart';
 
 const kScopeDetectLanguage = 'detectLanguage';
 const kScopeLookUp = 'lookUp';
@@ -74,6 +75,10 @@ abstract class TranslationEngine {
   bool get disabled => config.disabled ?? false;
 
   TranslationEngine(this.config);
+
+  Future<List<LanguagePair>> getSupportedLanguagePairs() {
+    throw UnimplementedError();
+  }
 
   Future<DetectLanguageResponse> detectLanguage(DetectLanguageRequest request);
 

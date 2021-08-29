@@ -14,6 +14,13 @@ class CloudoptAITranslationEngine extends TranslationEngine {
   CloudoptAITranslationEngine(TranslationEngineConfig config) : super(config);
 
   @override
+  Future<List<LanguagePair>> getSupportedLanguagePairs() {
+    return Future.value([
+      LanguagePair(sourceLanguage: 'en', targetLanguage: 'zh'),
+    ]);
+  }
+
+  @override
   Future<DetectLanguageResponse> detectLanguage(DetectLanguageRequest request) {
     throw UnimplementedError();
   }

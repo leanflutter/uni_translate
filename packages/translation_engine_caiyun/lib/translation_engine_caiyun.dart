@@ -25,6 +25,16 @@ class CaiyunTranslationEngine extends TranslationEngine {
   String get _optionRequestId => option[_kEngineOptionKeyRequestId];
 
   @override
+  Future<List<LanguagePair>> getSupportedLanguagePairs() {
+    return Future.value([
+      LanguagePair(sourceLanguage: 'en', targetLanguage: 'zh'),
+      LanguagePair(sourceLanguage: 'ja', targetLanguage: 'zh'),
+      LanguagePair(sourceLanguage: 'zh', targetLanguage: 'en'),
+      LanguagePair(sourceLanguage: 'zh', targetLanguage: 'ja'),
+    ]);
+  }
+
+  @override
   Future<DetectLanguageResponse> detectLanguage(DetectLanguageRequest request) {
     throw UnimplementedError();
   }
