@@ -25,14 +25,53 @@ class BaiduTranslationEngine extends TranslationEngine {
   BaiduTranslationEngine(TranslationEngineConfig config) : super(config);
 
   String get type => kEngineTypeBaidu;
-  List<String> get supportedScopes => [kScopeTranslate];
+  List<String> get supportedScopes => [kScopeDetectLanguage, kScopeTranslate];
 
   String get _optionAppId => option[_kEngineOptionKeyAppId];
   String get _optionAppKey => option[_kEngineOptionKeyAppKey];
 
   @override
-  Future<DetectLanguageResponse> detectLanguage(DetectLanguageRequest request) {
-    throw UnimplementedError();
+  Future<DetectLanguageResponse> detectLanguage(
+      DetectLanguageRequest request) async {
+    DetectLanguageResponse detectLanguageResponse = DetectLanguageResponse();
+
+    String q = request.texts.first;
+
+    final salt = Random().nextInt(999999);
+    final sign = _md5('$_optionAppId${q}$salt$_optionAppKey');
+
+    Uri uri = Uri.https(
+      'fanyi-api.baidu.com',
+      '/api/trans/vip/language',
+      {
+        'q': q,
+        'appid': _optionAppId,
+        'salt': salt.toString(),
+        'sign': sign.toString(),
+      },
+    );
+
+    var response = await http.post(uri, headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Accept': 'application/json',
+    });
+    Map<String, dynamic> data = json.decode(utf8.decode(response.bodyBytes));
+
+    if (data['error_code'] != null && data['error_code'] != 0) {
+      throw UniTranslateClientError(
+        code: data['error_code'].toString(),
+        message: data['error_msg'],
+      );
+    }
+
+    detectLanguageResponse.detections = [
+      TextDetection(
+        detectedLanguage: data['data']['src'],
+        text: q,
+      ),
+    ];
+
+    return detectLanguageResponse;
   }
 
   @override
@@ -44,8 +83,10 @@ class BaiduTranslationEngine extends TranslationEngine {
   Future<TranslateResponse> translate(TranslateRequest request) async {
     TranslateResponse translateResponse = TranslateResponse();
 
+    String q = request.text;
+
     final salt = Random().nextInt(999999);
-    final sign = _md5('$_optionAppId${request.text}$salt$_optionAppKey');
+    final sign = _md5('$_optionAppId${q}$salt$_optionAppKey');
 
     Uri uri = Uri.https(
       'fanyi-api.baidu.com',
@@ -67,9 +108,9 @@ class BaiduTranslationEngine extends TranslationEngine {
     });
     Map<String, dynamic> data = json.decode(utf8.decode(response.bodyBytes));
 
-    if (data['error_code'] != null) {
+    if (data['error_code'] != null && data['error_code'] != 0) {
       throw UniTranslateClientError(
-        code: data['error_code'],
+        code: data['error_code'].toString(),
         message: data['error_msg'],
       );
     }
