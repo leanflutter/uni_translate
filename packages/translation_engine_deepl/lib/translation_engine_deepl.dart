@@ -10,6 +10,23 @@ const String kEngineTypeDeepL = 'deepl';
 
 const String _kEngineOptionKeyAuthKey = 'authKey';
 
+const Map<String, String> _knownErrors = {
+  '400': 'Bad request. Please check error message and your parameters.',
+  '401':
+      'Authorization failed. Please supply a valid DeepL-Auth-Key via the Authorization header.',
+  '403':
+      'Forbidden. The access to the requested resource is denied, because of insufficient access rights.',
+  '404': 'The requested resource could not be found.',
+  '413': 'The request size exceeds the limit.',
+  '415':
+      'The requested entries format specified in the Accept header is not supported.',
+  '429': 'Too many requests. Please wait and resend your request.',
+  '456': 'Quota exceeded. The maximum amount of glossaries has been reached.',
+  '503': 'Resource currently unavailable. Try again later.',
+  '529': 'Too many requests. Please wait and resend your request.',
+  '5**': 'Internal error',
+};
+
 class DeepLTranslationEngine extends TranslationEngine {
   static List<String> optionKeys = [
     _kEngineOptionKeyAuthKey,
@@ -20,6 +37,7 @@ class DeepLTranslationEngine extends TranslationEngine {
   String get type => kEngineTypeDeepL;
   List<String> get supportedScopes => [kScopeTranslate];
 
+  bool get _isDeepLFree => _optionAuthKey.endsWith(':fx');
   String get _optionAuthKey => option[_kEngineOptionKeyAuthKey];
 
   @override
@@ -42,26 +60,46 @@ class DeepLTranslationEngine extends TranslationEngine {
       'source_lang': request.sourceLanguage.toUpperCase(),
       'target_lang': request.targetLanguage.toUpperCase(),
     };
-    var uri = Uri.https('api.deepl.com', '/v2/translate', queryParameters);
+
+    String host = _isDeepLFree ? 'api-free.deepl.com' : 'api.deepl.com';
+    var uri = Uri.https(host, '/v2/translate', queryParameters);
 
     var response = await http.post(uri, headers: {
       HttpHeaders.contentTypeHeader: "application/json; charset=utf-8"
     });
 
-    Map<String, dynamic> data = json.decode(utf8.decode(response.bodyBytes));
+    String errorMessage;
 
-    if (data['translations'] != null) {
-      Iterable l = data['translations'] as List;
-      translateResponse.translations = l
-          .map((e) => TextTranslation(
-                detectedSourceLanguage: e['detected_source_language'],
-                text: e['text'],
-              ))
-          .toList();
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(utf8.decode(response.bodyBytes));
+
+      if (data['translations'] != null) {
+        Iterable l = data['translations'] as List;
+        translateResponse.translations = l
+            .map((e) => TextTranslation(
+                  detectedSourceLanguage: e['detected_source_language'],
+                  text: e['text'],
+                ))
+            .toList();
+      }
+
+      if (data['message'] != null) {
+        errorMessage = [
+          data['message'],
+          data['detail'] ?? '',
+        ].join('\n');
+      }
+    } else {
+      errorMessage = _knownErrors['5**'];
+      if (_knownErrors.containsKey('${response.statusCode}')) {
+        errorMessage = _knownErrors['${response.statusCode}'];
+      }
     }
 
-    if (data['error'] != null) {
-      throw UniTranslateClientError(message: data['errorMessage']);
+    if ((errorMessage ?? '').trim().isNotEmpty) {
+      throw UniTranslateClientError(
+        message: errorMessage,
+      );
     }
 
     return translateResponse;
