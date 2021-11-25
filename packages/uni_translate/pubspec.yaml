@@ -12,8 +12,6 @@ dependencies:
     path: ../translation_engine_baidu
   translation_engine_caiyun:
     path: ../translation_engine_caiyun
-  translation_engine_cloudoptai:
-    path: ../translation_engine_cloudoptai
   translation_engine_deepl:
     path: ../translation_engine_deepl
   translation_engine_google:

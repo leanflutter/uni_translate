@@ -316,13 +316,6 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
-  translation_engine_cloudoptai:
-    dependency: "direct main"
-    description:
-      path: "../translation_engine_cloudoptai"
-      relative: true
-    source: path
-    version: "0.0.1"
   translation_engine_deepl:
     dependency: "direct main"
     description:
