@@ -1,13 +1,13 @@
 name: uni_translate
 description: A universal translate client.
-version: 0.0.1
-homepage: https://github.com/biyidev/uni_translate/
+version: 0.1.0
+homepage: https://github.com/biyidev/uni_translate
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  uni_translate_client: ^0.0.1
+  uni_translate_client: ^0.1.0
   translation_engine_baidu:
     path: ../translation_engine_baidu
   translation_engine_caiyun:

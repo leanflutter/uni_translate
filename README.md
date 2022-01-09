@@ -1,5 +1,10 @@
 # uni_translate
 
+[![pub version][pub-image]][pub-url] [![melos](https://img.shields.io/badge/maintained%20with-melos-f700ff.svg?style=flat-square)](https://github.com/invertase/melos)
+
+[pub-image]: https://img.shields.io/pub/v/uni_translate.svg?style=flat-square
+[pub-url]: https://pub.dev/packages/uni_translate
+
 A universal translate client.
 
 ## Engines

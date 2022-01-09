@@ -1,3 +1,3 @@
-## [0.0.1] - 2021-08-14
+## 0.1.0
 
-* initial release.
+* First release.

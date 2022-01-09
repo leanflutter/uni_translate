@@ -1,0 +1,4 @@
+name: uni_translate
+
+packages:
+  - packages/**

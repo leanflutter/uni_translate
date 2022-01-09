@@ -30,6 +30,26 @@ class BaiduTranslationEngine extends TranslationEngine {
   String get _optionAppId => option[_kEngineOptionKeyAppId];
   String get _optionAppKey => option[_kEngineOptionKeyAppKey];
 
+  String _convertLanguageCode(String languageCode) {
+    Map<String, String> map = {
+      // 'de': 'de',
+      // 'en': 'en',
+      'es': 'spa',
+      'fr': 'fra',
+      // 'it': 'it',
+      'ja': 'jp',
+      'ko': 'kor',
+      // 'pt': 'pt',
+      'ru': 'ru',
+      // 'zh': 'zh',
+    };
+
+    if (map.containsKey(languageCode)) {
+      return map[languageCode];
+    }
+    return languageCode;
+  }
+
   @override
   Future<DetectLanguageResponse> detectLanguage(
       DetectLanguageRequest request) async {
@@ -93,8 +113,8 @@ class BaiduTranslationEngine extends TranslationEngine {
       '/api/trans/vip/translate',
       {
         'q': request.text,
-        'from': request.sourceLanguage ?? 'auto',
-        'to': request.targetLanguage,
+        'from': _convertLanguageCode(request.sourceLanguage) ?? 'auto',
+        'to': _convertLanguageCode(request.targetLanguage),
         'appid': _optionAppId,
         'salt': salt.toString(),
         'sign': sign.toString(),
