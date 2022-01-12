@@ -38,7 +38,7 @@ class IcibaTranslationEngine extends TranslationEngine {
       'dict-co.iciba.com',
       '/api/dictionary.php',
       {
-        'w': request.word,
+        'w': (request.word ?? '').toLowerCase(),
         'key': _optionApiKey,
         'type': 'json',
       },
