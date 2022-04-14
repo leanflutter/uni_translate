@@ -1,15 +1,15 @@
 name: translation_engine_youdao
-description: ""
-version: 0.1.0
+description: Youdao translation engine
+version: 0.1.1
 homepage: https://github.com/biyidev/uni_translate
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   crypto: any
   http: any
-  uni_translate_client: ^0.1.0
+  uni_translate_client: ^0.1.1
 
 dev_dependencies:
   test: ^1.0.0

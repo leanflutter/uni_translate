@@ -4,17 +4,16 @@ class LookUpRequest extends TranslateRequest {
   final String word;
 
   LookUpRequest({
-    String sourceLanguage,
-    String targetLanguage,
-    this.word,
+    required String sourceLanguage,
+    required String targetLanguage,
+    required this.word,
   }) : super(
           sourceLanguage: sourceLanguage,
           targetLanguage: targetLanguage,
+          text: word,
         );
 
   factory LookUpRequest.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
-
     return LookUpRequest(
       sourceLanguage: json['sourceLanguage'],
       targetLanguage: json['targetLanguage'],

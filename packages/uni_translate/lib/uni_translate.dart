@@ -6,6 +6,5 @@ export 'package:translation_engine_caiyun/translation_engine_caiyun.dart';
 export 'package:translation_engine_deepl/translation_engine_deepl.dart';
 export 'package:translation_engine_google/translation_engine_google.dart';
 export 'package:translation_engine_iciba/translation_engine_iciba.dart';
-export 'package:translation_engine_sogou/translation_engine_sogou.dart';
 export 'package:translation_engine_tencent/translation_engine_tencent.dart';
 export 'package:translation_engine_youdao/translation_engine_youdao.dart';

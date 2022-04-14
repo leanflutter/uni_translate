@@ -3,13 +3,11 @@ class TextDetection {
   String text;
 
   TextDetection({
-    this.detectedLanguage,
-    this.text,
+    required this.detectedLanguage,
+    required this.text,
   });
 
   factory TextDetection.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
-
     return TextDetection(
       detectedLanguage: json['detectedLanguage'],
       text: json['text'],

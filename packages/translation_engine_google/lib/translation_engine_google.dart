@@ -25,7 +25,8 @@ class GoogleTranslationEngine extends TranslationEngine {
 
   @override
   Future<DetectLanguageResponse> detectLanguage(
-      DetectLanguageRequest request) async {
+    DetectLanguageRequest request,
+  ) async {
     DetectLanguageResponse detectLanguageResponse = DetectLanguageResponse();
 
     var response = await http.post(

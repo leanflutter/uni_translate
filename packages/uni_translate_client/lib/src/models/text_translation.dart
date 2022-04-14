@@ -1,17 +1,15 @@
 class TextTranslation {
-  String detectedSourceLanguage;
+  String? detectedSourceLanguage;
   String text;
-  String audioUrl;
+  String? audioUrl;
 
   TextTranslation({
     this.detectedSourceLanguage,
-    this.text,
+    required this.text,
     this.audioUrl,
   });
 
   factory TextTranslation.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
-
     return TextTranslation(
       detectedSourceLanguage: json['detectedSourceLanguage'],
       text: json['text'],

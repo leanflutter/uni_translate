@@ -57,8 +57,8 @@ class DeepLTranslationEngine extends TranslationEngine {
     Map<String, String> queryParameters = {
       'auth_key': _optionAuthKey,
       'text': request.text,
-      'source_lang': request.sourceLanguage.toUpperCase(),
-      'target_lang': request.targetLanguage.toUpperCase(),
+      'source_lang': request.sourceLanguage!.toUpperCase(),
+      'target_lang': request.targetLanguage!.toUpperCase(),
     };
 
     String host = _isDeepLFree ? 'api-free.deepl.com' : 'api.deepl.com';
@@ -68,7 +68,7 @@ class DeepLTranslationEngine extends TranslationEngine {
       HttpHeaders.contentTypeHeader: "application/json; charset=utf-8"
     });
 
-    String errorMessage;
+    String? errorMessage;
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(utf8.decode(response.bodyBytes));
@@ -98,7 +98,7 @@ class DeepLTranslationEngine extends TranslationEngine {
 
     if ((errorMessage ?? '').trim().isNotEmpty) {
       throw UniTranslateClientError(
-        message: errorMessage,
+        message: errorMessage!,
       );
     }
 

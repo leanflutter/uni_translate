@@ -1,13 +1,15 @@
 class WordTense {
-  String type;
-  String name;
-  List<String> values;
+  String? type;
+  String? name;
+  List<String>? values;
 
-  WordTense({this.type, this.name, this.values});
+  WordTense({
+    this.type,
+    this.name,
+    this.values,
+  });
 
   factory WordTense.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
-
     return WordTense(
       type: json['type'],
       name: json['name'],

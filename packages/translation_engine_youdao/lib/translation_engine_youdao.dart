@@ -35,7 +35,6 @@ class YoudaoTranslationEngine extends TranslationEngine {
 
   @override
   Future<DetectLanguageResponse> detectLanguage(DetectLanguageRequest request) {
-    // TODO: implement detectLanguage
     throw UnimplementedError();
   }
 
@@ -80,8 +79,8 @@ class YoudaoTranslationEngine extends TranslationEngine {
     if (translation != null) {
       lookUpResponse.translations =
           (translation as List).map((e) => TextTranslation(text: e)).toList();
-      if (lookUpResponse.translations.length == 1) {
-        lookUpResponse.translations[0].audioUrl = tSpeakUrl;
+      if ((lookUpResponse.translations ?? []).length == 1) {
+        lookUpResponse.translations?[0].audioUrl = tSpeakUrl;
       }
     }
 
@@ -103,7 +102,7 @@ class YoudaoTranslationEngine extends TranslationEngine {
         lookUpResponse.definitions = (explains as List).map((e) {
           String def = e.toString();
           int dotIndex = def.indexOf('. ');
-          String name = dotIndex >= 0 ? def.substring(0, dotIndex + 1) : null;
+          String? name = dotIndex >= 0 ? def.substring(0, dotIndex + 1) : null;
           String value = dotIndex >= 0 ? def.substring(dotIndex + 2) : def;
           List<String> values = value.split('；');
 

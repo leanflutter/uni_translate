@@ -1,6 +1,7 @@
 library translation_engine_iciba;
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:uni_translate_client/uni_translate_client.dart';
@@ -45,6 +46,11 @@ class IcibaTranslationEngine extends TranslationEngine {
     );
 
     var response = await http.get(uri);
+    if (response.headers[HttpHeaders.contentTypeHeader]?.contains('text/xml') ==
+        true) {
+      throw UniTranslateClientError(message: 'Please check your key');
+    }
+
     Map<String, dynamic> data = json.decode(utf8.decode(response.bodyBytes));
 
     lookUpResponse.word = data['word_name'];
@@ -95,7 +101,7 @@ class IcibaTranslationEngine extends TranslationEngine {
       lookUpResponse.tenses = (data['exchange'] as Map)
           .keys
           .map((k) {
-            String name = map[k];
+            String name = map[k] ?? '';
             dynamic value = (data['exchange'][k]);
             List<String> values = [];
 
@@ -108,10 +114,10 @@ class IcibaTranslationEngine extends TranslationEngine {
               values: values,
             );
           })
-          .where((e) => e.values.length > 0)
+          .where((e) => (e.values ?? []).length > 0)
           .toList();
 
-      if (lookUpResponse.tenses.length == 0) {
+      if ((lookUpResponse.tenses ?? []).length == 0) {
         lookUpResponse.tenses = null;
       }
     }

@@ -1,16 +1,14 @@
 import 'models/text_detection.dart';
 
 class DetectLanguageResponse {
-  List<TextDetection> detections;
+  List<TextDetection>? detections;
 
   DetectLanguageResponse({
     this.detections,
   });
 
   factory DetectLanguageResponse.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
-
-    List<TextDetection> detections;
+    List<TextDetection> detections = [];
 
     if (json['detections'] != null) {
       Iterable l = json['detections'] as List;
@@ -24,7 +22,7 @@ class DetectLanguageResponse {
 
   Map<String, dynamic> toJson() {
     return {
-      'detections': detections?.map((e) => e.toJson())?.toList(),
+      'detections': (detections ?? []).map((e) => e.toJson()).toList(),
     }..removeWhere((key, value) => value == null);
   }
 }

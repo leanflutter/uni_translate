@@ -1,10 +1,10 @@
 name: uni_translate_client
 description: A universal translate client.
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/biyidev/uni_translate
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dev_dependencies:
   test: ^1.0.0

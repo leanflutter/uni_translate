@@ -22,31 +22,23 @@ class TranslationEngineConfig {
   String get shortId => identifier.substring(0, 4);
 
   TranslationEngineConfig({
-    this.identifier,
-    this.type,
-    this.name,
-    this.option,
-    this.supportedScopes,
-    this.disabledScopes,
+    required this.identifier,
+    required this.type,
+    required this.name,
+    required this.option,
+    this.supportedScopes = const [],
+    this.disabledScopes = const [],
     this.disabled = false,
   });
 
   factory TranslationEngineConfig.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
-
     return TranslationEngineConfig(
       identifier: json['identifier'],
       type: json['type'],
       name: json['name'],
-      option: json['option'] != null
-          ? Map<String, dynamic>.from(json['option'])
-          : null,
-      supportedScopes: json['supportedScopes'] != null
-          ? List<String>.from(json['supportedScopes'])
-          : null,
-      disabledScopes: json['disabledScopes'] != null
-          ? List<String>.from(json['disabledScopes'])
-          : null,
+      option: Map<String, dynamic>.from(json['option'] ?? {}),
+      supportedScopes: List<String>.from(json['supportedScopes'] ?? []),
+      disabledScopes: List<String>.from(json['disabledScopes'] ?? []),
       disabled: json['disabled'] ?? false,
     );
   }
@@ -58,7 +50,7 @@ class TranslationEngineConfig {
       'option': option,
       'supportedScopes': supportedScopes,
       'disabledScopes': disabledScopes,
-      'disabled': disabled ?? false,
+      'disabled': disabled,
     };
   }
 }
@@ -70,9 +62,9 @@ abstract class TranslationEngine {
   String get type => config.type;
   String get name => config.name;
   Map<String, dynamic> get option => config.option;
-  List<String> get supportedScopes => config.supportedScopes ?? [];
-  List<String> get disabledScopes => config.disabledScopes ?? [];
-  bool get disabled => config.disabled ?? false;
+  List<String> get supportedScopes => config.supportedScopes;
+  List<String> get disabledScopes => config.disabledScopes;
+  bool get disabled => config.disabled;
 
   TranslationEngine(this.config);
 

@@ -4,13 +4,11 @@ class WordPhrase {
   final List<String> translations;
 
   WordPhrase({
-    this.text,
-    this.translations,
+    required this.text,
+    required this.translations,
   });
 
   factory WordPhrase.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
-
     return WordPhrase(
       text: json['text'],
       translations: List<String>.from(json['translations']),

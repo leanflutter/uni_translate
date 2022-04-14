@@ -1,8 +1,8 @@
 class LanguagePair {
-  final String sourceLanguage;
-  final String sourceLanguageId;
-  final String targetLanguage;
-  final String targetLanguageId;
+  final String? sourceLanguage;
+  final String? sourceLanguageId;
+  final String? targetLanguage;
+  final String? targetLanguageId;
 
   LanguagePair({
     this.sourceLanguage,
@@ -12,8 +12,6 @@ class LanguagePair {
   });
 
   factory LanguagePair.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
-
     return LanguagePair(
       sourceLanguage: json['sourceLanguage'],
       sourceLanguageId: json['sourceLanguageId'],

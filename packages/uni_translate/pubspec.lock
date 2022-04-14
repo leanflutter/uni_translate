@@ -308,56 +308,49 @@ packages:
       path: "../translation_engine_baidu"
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.1.1"
   translation_engine_caiyun:
     dependency: "direct main"
     description:
       path: "../translation_engine_caiyun"
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.1.1"
   translation_engine_deepl:
     dependency: "direct main"
     description:
       path: "../translation_engine_deepl"
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.1.1"
   translation_engine_google:
     dependency: "direct main"
     description:
       path: "../translation_engine_google"
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.1.1"
   translation_engine_iciba:
     dependency: "direct main"
     description:
       path: "../translation_engine_iciba"
       relative: true
     source: path
-    version: "0.1.0"
-  translation_engine_sogou:
-    dependency: "direct main"
-    description:
-      path: "../translation_engine_sogou"
-      relative: true
-    source: path
-    version: "0.1.0"
+    version: "0.1.1"
   translation_engine_tencent:
     dependency: "direct main"
     description:
       path: "../translation_engine_tencent"
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.1.1"
   translation_engine_youdao:
     dependency: "direct main"
     description:
       path: "../translation_engine_youdao"
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.1.1"
   typed_data:
     dependency: transitive
     description:
@@ -371,7 +364,7 @@ packages:
       path: "../uni_translate_client"
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.1.1"
   vm_service:
     dependency: transitive
     description:

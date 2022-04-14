@@ -1,29 +1,20 @@
 name: uni_translate
 description: A universal translate client.
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/biyidev/uni_translate
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  uni_translate_client: ^0.1.0
-  translation_engine_baidu:
-    path: ../translation_engine_baidu
-  translation_engine_caiyun:
-    path: ../translation_engine_caiyun
-  translation_engine_deepl:
-    path: ../translation_engine_deepl
-  translation_engine_google:
-    path: ../translation_engine_google
-  translation_engine_iciba:
-    path: ../translation_engine_iciba
-  translation_engine_sogou:
-    path: ../translation_engine_sogou
-  translation_engine_tencent:
-    path: ../translation_engine_tencent
-  translation_engine_youdao:
-    path: ../translation_engine_youdao
+  uni_translate_client: ^0.1.1
+  translation_engine_baidu: ^0.1.1
+  translation_engine_caiyun: ^0.1.1
+  translation_engine_deepl: ^0.1.1
+  translation_engine_google: ^0.1.1
+  translation_engine_iciba: ^0.1.1
+  translation_engine_tencent: ^0.1.1
+  translation_engine_youdao: ^0.1.1
 
 dev_dependencies:
   test: ^1.0.0

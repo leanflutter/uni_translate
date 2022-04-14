@@ -30,7 +30,7 @@ class BaiduTranslationEngine extends TranslationEngine {
   String get _optionAppId => option[_kEngineOptionKeyAppId];
   String get _optionAppKey => option[_kEngineOptionKeyAppKey];
 
-  String _convertLanguageCode(String languageCode) {
+  String? _convertLanguageCode(String? languageCode) {
     Map<String, String> map = {
       // 'de': 'de',
       // 'en': 'en',
@@ -52,7 +52,8 @@ class BaiduTranslationEngine extends TranslationEngine {
 
   @override
   Future<DetectLanguageResponse> detectLanguage(
-      DetectLanguageRequest request) async {
+    DetectLanguageRequest request,
+  ) async {
     DetectLanguageResponse detectLanguageResponse = DetectLanguageResponse();
 
     String q = request.texts.first;

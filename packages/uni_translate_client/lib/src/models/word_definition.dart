@@ -1,7 +1,7 @@
 class WordDefinition {
-  String type;
-  String name;
-  List<String> values;
+  String? type;
+  String? name;
+  List<String>? values;
 
   WordDefinition({
     this.type,
@@ -10,9 +10,7 @@ class WordDefinition {
   });
 
   factory WordDefinition.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
-
-    List<String> values;
+    List<String>? values;
 
     if (json['values'] != null) {
       Iterable l = json['values'] as List;

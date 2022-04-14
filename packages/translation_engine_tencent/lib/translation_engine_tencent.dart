@@ -103,7 +103,7 @@ class TencentTranslationEngine extends TranslationEngine {
       'SecretId': _optionSecretId,
       'Source': request.sourceLanguage ?? 'auto',
       'SourceText': request.text,
-      'Target': request.targetLanguage,
+      'Target': request.targetLanguage!,
       'Timestamp': '${DateTime.now().millisecondsSinceEpoch ~/ 1000}',
       'Version': '2018-03-21',
     };

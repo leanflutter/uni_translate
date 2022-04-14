@@ -1,16 +1,14 @@
 import 'models/text_translation.dart';
 
 class TranslateResponse {
-  List<TextTranslation> translations;
+  List<TextTranslation>? translations;
 
   TranslateResponse({
     this.translations,
   });
 
   factory TranslateResponse.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
-
-    List<TextTranslation> translations;
+    List<TextTranslation> translations = [];
 
     if (json['translations'] != null) {
       Iterable l = json['translations'] as List;
@@ -24,7 +22,7 @@ class TranslateResponse {
 
   Map<String, dynamic> toJson() {
     return {
-      'translations': translations?.map((e) => e.toJson())?.toList(),
+      'translations': (translations ?? []).map((e) => e.toJson()).toList(),
     }..removeWhere((key, value) => value == null);
   }
 }

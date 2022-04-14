@@ -2,12 +2,10 @@ class WordImage {
   String url;
 
   WordImage({
-    this.url,
+    required this.url,
   });
 
   factory WordImage.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
-
     return WordImage(
       url: json['url'],
     );

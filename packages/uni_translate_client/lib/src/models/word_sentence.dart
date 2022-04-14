@@ -3,13 +3,11 @@ class WordSentence {
   final List<String> translations;
 
   WordSentence({
-    this.text,
-    this.translations,
+    required this.text,
+    required this.translations,
   });
 
   factory WordSentence.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
-
     return WordSentence(
       text: json['text'],
       translations: List<String>.from(json['translations']),
