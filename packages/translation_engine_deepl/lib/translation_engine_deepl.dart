@@ -32,13 +32,16 @@ class DeepLTranslationEngine extends TranslationEngine {
     _kEngineOptionKeyAuthKey,
   ];
 
-  DeepLTranslationEngine(TranslationEngineConfig config) : super(config);
+  DeepLTranslationEngine({
+    required String identifier,
+    Map<String, dynamic>? option,
+  }) : super(identifier: identifier, option: option);
 
   String get type => kEngineTypeDeepL;
   List<String> get supportedScopes => [kScopeTranslate];
 
   bool get _isDeepLFree => _optionAuthKey.endsWith(':fx');
-  String get _optionAuthKey => option[_kEngineOptionKeyAuthKey];
+  String get _optionAuthKey => option?[_kEngineOptionKeyAuthKey];
 
   @override
   Future<DetectLanguageResponse> detectLanguage(DetectLanguageRequest request) {

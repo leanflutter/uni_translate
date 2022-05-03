@@ -15,12 +15,15 @@ class IcibaTranslationEngine extends TranslationEngine {
     _kEngineOptionKeyApiKey,
   ];
 
-  IcibaTranslationEngine(TranslationEngineConfig config) : super(config);
+  IcibaTranslationEngine({
+    required String identifier,
+    Map<String, dynamic>? option,
+  }) : super(identifier: identifier, option: option);
 
   String get type => kEngineTypeIciba;
   List<String> get supportedScopes => [kScopeLookUp];
 
-  String get _optionApiKey => option[_kEngineOptionKeyApiKey];
+  String get _optionApiKey => option?[_kEngineOptionKeyApiKey];
 
   @override
   Future<DetectLanguageResponse> detectLanguage(DetectLanguageRequest request) {
@@ -39,7 +42,7 @@ class IcibaTranslationEngine extends TranslationEngine {
       'dict-co.iciba.com',
       '/api/dictionary.php',
       {
-        'w': (request.word ?? '').toLowerCase(),
+        'w': request.word.toLowerCase(),
         'key': _optionApiKey,
         'type': 'json',
       },

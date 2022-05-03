@@ -25,13 +25,16 @@ class YoudaoTranslationEngine extends TranslationEngine {
     _kEngineOptionKeyAppSecret,
   ];
 
-  YoudaoTranslationEngine(TranslationEngineConfig config) : super(config);
+  YoudaoTranslationEngine({
+    required String identifier,
+    Map<String, dynamic>? option,
+  }) : super(identifier: identifier, option: option);
 
   String get type => kEngineTypeYoudao;
   List<String> get supportedScopes => [kScopeLookUp];
 
-  String get _optionAppKey => option[_kEngineOptionKeyAppKey];
-  String get _optionAppSecret => option[_kEngineOptionKeyAppSecret];
+  String get _optionAppKey => option?[_kEngineOptionKeyAppKey];
+  String get _optionAppSecret => option?[_kEngineOptionKeyAppSecret];
 
   @override
   Future<DetectLanguageResponse> detectLanguage(DetectLanguageRequest request) {
@@ -70,7 +73,7 @@ class YoudaoTranslationEngine extends TranslationEngine {
     var response = await http.get(uri);
     Map<String, dynamic> data = json.decode(utf8.decode(response.bodyBytes));
 
-    var query = data['query'];
+    // var query = data['query'];
     var translation = data['translation'];
     var basic = data['basic'];
     var returnPhrase = data['returnPhrase'];

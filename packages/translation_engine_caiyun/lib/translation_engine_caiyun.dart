@@ -16,13 +16,19 @@ class CaiyunTranslationEngine extends TranslationEngine {
     _kEngineOptionKeyRequestId,
   ];
 
-  CaiyunTranslationEngine(TranslationEngineConfig config) : super(config);
-
+  @override
   String get type => kEngineTypeCaiyun;
-  List<String> get supportedScopes => [kScopeTranslate];
 
-  String get _optionToken => option[_kEngineOptionKeyToken];
-  String get _optionRequestId => option[_kEngineOptionKeyRequestId];
+  @override
+  List<String> get supportedScopes => const [kScopeTranslate];
+
+  CaiyunTranslationEngine({
+    required String identifier,
+    Map<String, dynamic>? option,
+  }) : super(identifier: identifier, option: option);
+
+  String get _optionToken => option?[_kEngineOptionKeyToken];
+  String get _optionRequestId => option?[_kEngineOptionKeyRequestId];
 
   @override
   Future<List<LanguagePair>> getSupportedLanguagePairs() {

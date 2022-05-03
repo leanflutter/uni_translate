@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import 'package:translation_engine_tencent/translation_engine_tencent.dart';
+// import 'package:translation_engine_tencent/translation_engine_tencent.dart';
 
 void main() {
   test('adds one to input values', () {

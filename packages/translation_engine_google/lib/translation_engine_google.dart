@@ -3,7 +3,7 @@ library translation_engine_google;
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:crypto/crypto.dart';
+// import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 import 'package:uni_translate_client/uni_translate_client.dart';
 
@@ -16,12 +16,15 @@ class GoogleTranslationEngine extends TranslationEngine {
     _kEngineOptionKeyApiKey,
   ];
 
-  GoogleTranslationEngine(TranslationEngineConfig config) : super(config);
+  GoogleTranslationEngine({
+    required String identifier,
+    Map<String, dynamic>? option,
+  }) : super(identifier: identifier, option: option);
 
   String get type => kEngineTypeGoogle;
   List<String> get supportedScopes => [kScopeDetectLanguage, kScopeTranslate];
 
-  String get _optionApiKey => option[_kEngineOptionKeyApiKey];
+  String get _optionApiKey => option?[_kEngineOptionKeyApiKey];
 
   @override
   Future<DetectLanguageResponse> detectLanguage(

@@ -25,13 +25,16 @@ class TencentTranslationEngine extends TranslationEngine {
     _kEngineOptionKeySecretKey,
   ];
 
-  TencentTranslationEngine(TranslationEngineConfig config) : super(config);
+  TencentTranslationEngine({
+    required String identifier,
+    Map<String, dynamic>? option,
+  }) : super(identifier: identifier, option: option);
 
   String get type => kEngineTypeTencent;
   List<String> get supportedScopes => [kScopeTranslate];
 
-  String get _optionSecretId => option[_kEngineOptionKeySecretId];
-  String get _optionSecretKey => option[_kEngineOptionKeySecretKey];
+  String get _optionSecretId => option?[_kEngineOptionKeySecretId];
+  String get _optionSecretKey => option?[_kEngineOptionKeySecretKey];
 
   @override
   Future<DetectLanguageResponse> detectLanguage(

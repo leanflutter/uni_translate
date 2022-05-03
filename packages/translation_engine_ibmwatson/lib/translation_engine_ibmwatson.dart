@@ -20,13 +20,16 @@ class IBMWatsonTranslationEngine extends TranslationEngine {
     _kEngineOptionKeyApiUrl,
   ];
 
-  IBMWatsonTranslationEngine(TranslationEngineConfig config) : super(config);
+  IBMWatsonTranslationEngine({
+    required String identifier,
+    Map<String, dynamic>? option,
+  }) : super(identifier: identifier, option: option);
 
   String get type => kEngineTypeIBMWatson;
   List<String> get supportedScopes => [kScopeTranslate];
 
-  String get _optionApiKey => option[_kEngineOptionKeyApiKey];
-  String get _optionApiUrl => option[_kEngineOptionKeyApiUrl];
+  String get _optionApiKey => option?[_kEngineOptionKeyApiKey];
+  String get _optionApiUrl => option?[_kEngineOptionKeyApiUrl];
 
   @override
   Future<DetectLanguageResponse> detectLanguage(DetectLanguageRequest request) {

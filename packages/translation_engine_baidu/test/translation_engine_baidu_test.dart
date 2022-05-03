@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import 'package:translation_engine_baidu/translation_engine_baidu.dart';
+// import 'package:translation_engine_baidu/translation_engine_baidu.dart';
 
 void main() {
   test('adds one to input values', () {

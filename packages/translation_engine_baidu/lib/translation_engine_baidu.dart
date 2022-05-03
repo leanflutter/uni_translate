@@ -22,13 +22,16 @@ class BaiduTranslationEngine extends TranslationEngine {
     _kEngineOptionKeyAppKey,
   ];
 
-  BaiduTranslationEngine(TranslationEngineConfig config) : super(config);
+  BaiduTranslationEngine({
+    required String identifier,
+    Map<String, dynamic>? option,
+  }) : super(identifier: identifier, option: option);
 
   String get type => kEngineTypeBaidu;
   List<String> get supportedScopes => [kScopeDetectLanguage, kScopeTranslate];
 
-  String get _optionAppId => option[_kEngineOptionKeyAppId];
-  String get _optionAppKey => option[_kEngineOptionKeyAppKey];
+  String get _optionAppId => option?[_kEngineOptionKeyAppId];
+  String get _optionAppKey => option?[_kEngineOptionKeyAppKey];
 
   String? _convertLanguageCode(String? languageCode) {
     Map<String, String> map = {
