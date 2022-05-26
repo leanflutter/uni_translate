@@ -33,8 +33,8 @@ class TencentTranslationEngine extends TranslationEngine {
   String get type => kEngineTypeTencent;
   List<String> get supportedScopes => [kScopeTranslate];
 
-  String get _optionSecretId => option?[_kEngineOptionKeySecretId];
-  String get _optionSecretKey => option?[_kEngineOptionKeySecretKey];
+  String get _optionSecretId => option?[_kEngineOptionKeySecretId] ?? '';
+  String get _optionSecretKey => option?[_kEngineOptionKeySecretKey] ?? '';
 
   @override
   Future<DetectLanguageResponse> detectLanguage(
@@ -136,6 +136,12 @@ class TencentTranslationEngine extends TranslationEngine {
 
     Map<String, dynamic> data = json.decode(utf8.decode(response.bodyBytes));
 
+    if (data['Response']['Error'] != null) {
+      throw UniTranslateClientError(
+        code: data['Response']['Error']['Code'],
+        message: data['Response']['Error']['Message'],
+      );
+    }
     translateResponse.translations = [
       TextTranslation(text: data['Response']['TargetText']),
     ];

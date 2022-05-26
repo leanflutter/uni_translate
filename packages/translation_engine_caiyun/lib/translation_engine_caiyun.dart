@@ -27,8 +27,8 @@ class CaiyunTranslationEngine extends TranslationEngine {
     Map<String, dynamic>? option,
   }) : super(identifier: identifier, option: option);
 
-  String get _optionToken => option?[_kEngineOptionKeyToken];
-  String get _optionRequestId => option?[_kEngineOptionKeyRequestId];
+  String get _optionToken => option?[_kEngineOptionKeyToken] ?? '';
+  String get _optionRequestId => option?[_kEngineOptionKeyRequestId] ?? '';
 
   @override
   Future<List<LanguagePair>> getSupportedLanguagePairs() {

@@ -41,7 +41,7 @@ class DeepLTranslationEngine extends TranslationEngine {
   List<String> get supportedScopes => [kScopeTranslate];
 
   bool get _isDeepLFree => _optionAuthKey.endsWith(':fx');
-  String get _optionAuthKey => option?[_kEngineOptionKeyAuthKey];
+  String get _optionAuthKey => option?[_kEngineOptionKeyAuthKey] ?? '';
 
   @override
   Future<DetectLanguageResponse> detectLanguage(DetectLanguageRequest request) {

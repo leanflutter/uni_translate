@@ -23,7 +23,7 @@ class IcibaTranslationEngine extends TranslationEngine {
   String get type => kEngineTypeIciba;
   List<String> get supportedScopes => [kScopeLookUp];
 
-  String get _optionApiKey => option?[_kEngineOptionKeyApiKey];
+  String get _optionApiKey => option?[_kEngineOptionKeyApiKey] ?? '';
 
   @override
   Future<DetectLanguageResponse> detectLanguage(DetectLanguageRequest request) {

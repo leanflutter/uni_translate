@@ -28,8 +28,8 @@ class IBMWatsonTranslationEngine extends TranslationEngine {
   String get type => kEngineTypeIBMWatson;
   List<String> get supportedScopes => [kScopeTranslate];
 
-  String get _optionApiKey => option?[_kEngineOptionKeyApiKey];
-  String get _optionApiUrl => option?[_kEngineOptionKeyApiUrl];
+  String get _optionApiKey => option?[_kEngineOptionKeyApiKey] ?? '';
+  String get _optionApiUrl => option?[_kEngineOptionKeyApiUrl] ?? '';
 
   @override
   Future<DetectLanguageResponse> detectLanguage(DetectLanguageRequest request) {

@@ -24,7 +24,7 @@ class GoogleTranslationEngine extends TranslationEngine {
   String get type => kEngineTypeGoogle;
   List<String> get supportedScopes => [kScopeDetectLanguage, kScopeTranslate];
 
-  String get _optionApiKey => option?[_kEngineOptionKeyApiKey];
+  String get _optionApiKey => option?[_kEngineOptionKeyApiKey] ?? '';
 
   @override
   Future<DetectLanguageResponse> detectLanguage(
@@ -54,8 +54,6 @@ class GoogleTranslationEngine extends TranslationEngine {
       );
     }
 
-    print(data);
-
     try {
       detectLanguageResponse.detections =
           List.from(data['data']['detections'][0])
@@ -70,7 +68,6 @@ class GoogleTranslationEngine extends TranslationEngine {
       print(error);
     }
 
-    print(detectLanguageResponse.toJson());
     return detectLanguageResponse;
   }
 

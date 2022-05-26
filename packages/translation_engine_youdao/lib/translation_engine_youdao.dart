@@ -6,6 +6,8 @@ import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 import 'package:uni_translate_client/uni_translate_client.dart';
 
+import 'youdao_api_known_errors.dart';
+
 const String kEngineTypeYoudao = 'youdao';
 
 const String _kEngineOptionKeyAppKey = 'appKey';
@@ -33,8 +35,8 @@ class YoudaoTranslationEngine extends TranslationEngine {
   String get type => kEngineTypeYoudao;
   List<String> get supportedScopes => [kScopeLookUp];
 
-  String get _optionAppKey => option?[_kEngineOptionKeyAppKey];
-  String get _optionAppSecret => option?[_kEngineOptionKeyAppSecret];
+  String get _optionAppKey => option?[_kEngineOptionKeyAppKey] ?? '';
+  String get _optionAppSecret => option?[_kEngineOptionKeyAppSecret] ?? '';
 
   @override
   Future<DetectLanguageResponse> detectLanguage(DetectLanguageRequest request) {
@@ -72,6 +74,15 @@ class YoudaoTranslationEngine extends TranslationEngine {
 
     var response = await http.get(uri);
     Map<String, dynamic> data = json.decode(utf8.decode(response.bodyBytes));
+
+    if (data['errorCode'] != null) {
+      String errorCode = data['errorCode'];
+      String errorMessage = 'ErrorCode: $errorCode';
+      if (youdaoApiKnownErrors.containsKey(errorCode)) {
+        errorMessage = youdaoApiKnownErrors[errorCode]!;
+      }
+      throw UniTranslateClientError(message: errorMessage);
+    }
 
     // var query = data['query'];
     var translation = data['translation'];
