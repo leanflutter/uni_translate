@@ -75,7 +75,7 @@ class YoudaoTranslationEngine extends TranslationEngine {
     var response = await http.get(uri);
     Map<String, dynamic> data = json.decode(utf8.decode(response.bodyBytes));
 
-    if (data['errorCode'] != null) {
+    if (data['errorCode'] != '0') {
       String errorCode = data['errorCode'];
       String errorMessage = 'ErrorCode: $errorCode';
       if (youdaoApiKnownErrors.containsKey(errorCode)) {
