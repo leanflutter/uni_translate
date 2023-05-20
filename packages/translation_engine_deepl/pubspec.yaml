@@ -1,6 +1,6 @@
 name: translation_engine_deepl
 description: DeepL translation engine
-version: 0.1.1
+version: 0.1.2
 homepage: https://github.com/biyidev/uni_translate
 
 environment:
@@ -8,7 +8,7 @@ environment:
 
 dependencies:
   http: any
-  uni_translate_client: ^0.1.1
+  uni_translate_client: ^0.1.2
 
 dev_dependencies:
   test: ^1.0.0
