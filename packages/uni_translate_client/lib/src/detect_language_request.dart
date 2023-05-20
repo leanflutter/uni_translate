@@ -1,6 +1,4 @@
 class DetectLanguageRequest {
-  final List<String> texts;
-
   DetectLanguageRequest({
     required this.texts,
   });
@@ -10,6 +8,8 @@ class DetectLanguageRequest {
       texts: json['texts'],
     );
   }
+
+  final List<String> texts;
 
   Map<String, dynamic> toJson() {
     return {

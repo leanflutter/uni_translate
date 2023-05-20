@@ -15,17 +15,19 @@ String _base64(String data) {
 }
 
 class IBMWatsonTranslationEngine extends TranslationEngine {
-  static List<String> optionKeys = [
-    _kEngineOptionKeyApiKey,
-    _kEngineOptionKeyApiUrl,
-  ];
-
   IBMWatsonTranslationEngine({
     required String identifier,
     Map<String, dynamic>? option,
   }) : super(identifier: identifier, option: option);
 
+  static List<String> optionKeys = [
+    _kEngineOptionKeyApiKey,
+    _kEngineOptionKeyApiUrl,
+  ];
+
+  @override
   String get type => kEngineTypeIBMWatson;
+  @override
   List<String> get supportedScopes => [kScopeTranslate];
 
   String get _optionApiKey => option?[_kEngineOptionKeyApiKey] ?? '';

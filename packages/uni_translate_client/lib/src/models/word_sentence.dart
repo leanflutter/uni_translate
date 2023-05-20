@@ -1,7 +1,4 @@
 class WordSentence {
-  final String text;
-  final List<String> translations;
-
   WordSentence({
     required this.text,
     required this.translations,
@@ -13,6 +10,9 @@ class WordSentence {
       translations: List<String>.from(json['translations']),
     );
   }
+
+  final String text;
+  final List<String> translations;
 
   Map<String, dynamic> toJson() {
     return {

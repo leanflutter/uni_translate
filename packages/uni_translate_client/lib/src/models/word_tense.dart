@@ -1,14 +1,9 @@
 class WordTense {
-  String? type;
-  String? name;
-  List<String>? values;
-
   WordTense({
     this.type,
     this.name,
     this.values,
   });
-
   factory WordTense.fromJson(Map<String, dynamic> json) {
     return WordTense(
       type: json['type'],
@@ -16,6 +11,10 @@ class WordTense {
       values: List<String>.from(json['values']),
     );
   }
+
+  String? type;
+  String? name;
+  List<String>? values;
 
   Map<String, dynamic> toJson() {
     return {

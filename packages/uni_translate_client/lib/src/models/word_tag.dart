@@ -1,6 +1,4 @@
 class WordTag {
-  String name;
-
   WordTag({
     required this.name,
   });
@@ -10,6 +8,8 @@ class WordTag {
       name: json['name'],
     );
   }
+
+  String name;
 
   Map<String, dynamic> toJson() {
     return {

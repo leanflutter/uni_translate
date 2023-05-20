@@ -1,8 +1,4 @@
 class TranslateRequest {
-  final String? sourceLanguage;
-  final String? targetLanguage;
-  final String text;
-
   TranslateRequest({
     this.sourceLanguage,
     this.targetLanguage,
@@ -16,6 +12,10 @@ class TranslateRequest {
       text: json['text'],
     );
   }
+
+  final String? sourceLanguage;
+  final String? targetLanguage;
+  final String text;
 
   Map<String, dynamic> toJson() {
     return {

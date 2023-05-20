@@ -11,6 +11,11 @@ const String _kEngineOptionKeyToken = 'token';
 const String _kEngineOptionKeyRequestId = 'requestId';
 
 class CaiyunTranslationEngine extends TranslationEngine {
+  CaiyunTranslationEngine({
+    required String identifier,
+    Map<String, dynamic>? option,
+  }) : super(identifier: identifier, option: option);
+
   static List<String> optionKeys = [
     _kEngineOptionKeyToken,
     _kEngineOptionKeyRequestId,
@@ -21,11 +26,6 @@ class CaiyunTranslationEngine extends TranslationEngine {
 
   @override
   List<String> get supportedScopes => const [kScopeTranslate];
-
-  CaiyunTranslationEngine({
-    required String identifier,
-    Map<String, dynamic>? option,
-  }) : super(identifier: identifier, option: option);
 
   String get _optionToken => option?[_kEngineOptionKeyToken] ?? '';
   String get _optionRequestId => option?[_kEngineOptionKeyRequestId] ?? '';
@@ -70,7 +70,7 @@ class CaiyunTranslationEngine extends TranslationEngine {
       Uri.parse('http://api.interpreter.caiyunai.com/v1/translator'),
       headers: {
         'Content-Type': 'application/json',
-        'X-Authorization': 'token ${_optionToken}',
+        'X-Authorization': 'token $_optionToken',
       },
       body: json.encode(payload),
     );

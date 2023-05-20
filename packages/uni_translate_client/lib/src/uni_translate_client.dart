@@ -1,10 +1,10 @@
-import 'translation_engine.dart';
-import 'uni_translate_client_adapter.dart';
+import 'package:uni_translate_client/src/translation_engine.dart';
+import 'package:uni_translate_client/src/uni_translate_client_adapter.dart';
 
 class UniTranslateClient {
-  final UniTranslateClientAdapter adapter;
-
   UniTranslateClient(this.adapter);
+
+  final UniTranslateClientAdapter adapter;
 
   TranslationEngine get firstEngine {
     return adapter.first;

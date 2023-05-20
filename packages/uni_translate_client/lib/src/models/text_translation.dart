@@ -1,8 +1,4 @@
 class TextTranslation {
-  String? detectedSourceLanguage;
-  String text;
-  String? audioUrl;
-
   TextTranslation({
     this.detectedSourceLanguage,
     required this.text,
@@ -16,6 +12,10 @@ class TextTranslation {
       audioUrl: json['audioUrl'],
     );
   }
+
+  String? detectedSourceLanguage;
+  String text;
+  String? audioUrl;
 
   Map<String, dynamic> toJson() {
     return {

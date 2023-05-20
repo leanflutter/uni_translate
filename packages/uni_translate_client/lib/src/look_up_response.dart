@@ -1,24 +1,14 @@
-import 'translate_response.dart';
-import 'models/text_translation.dart';
-import 'models/word_definition.dart';
-import 'models/word_image.dart';
-import 'models/word_phrase.dart';
-import 'models/word_pronunciation.dart';
-import 'models/word_sentence.dart';
-import 'models/word_tense.dart';
-import 'models/word_tag.dart';
+import 'package:uni_translate_client/src/models/text_translation.dart';
+import 'package:uni_translate_client/src/models/word_definition.dart';
+import 'package:uni_translate_client/src/models/word_image.dart';
+import 'package:uni_translate_client/src/models/word_phrase.dart';
+import 'package:uni_translate_client/src/models/word_pronunciation.dart';
+import 'package:uni_translate_client/src/models/word_sentence.dart';
+import 'package:uni_translate_client/src/models/word_tag.dart';
+import 'package:uni_translate_client/src/models/word_tense.dart';
+import 'package:uni_translate_client/src/translate_response.dart';
 
 class LookUpResponse extends TranslateResponse {
-  String? word; // 单词
-  String? tip; // 提示
-  List<WordTag>? tags; // 标签
-  List<WordDefinition>? definitions; // 定义（基本释义）
-  List<WordPronunciation>? pronunciations; // 发音
-  List<WordImage>? images; // 图片
-  List<WordPhrase>? phrases; // 短语
-  List<WordTense>? tenses; // 时态
-  List<WordSentence>? sentences; // 例句
-
   LookUpResponse({
     List<TextTranslation> translations = const [],
     this.word,
@@ -30,9 +20,7 @@ class LookUpResponse extends TranslateResponse {
     this.phrases,
     this.tenses,
     this.sentences,
-  }) : super(
-          translations: translations,
-        );
+  }) : super(translations: translations);
 
   factory LookUpResponse.fromJson(Map<String, dynamic> json) {
     List<TextTranslation> translations = [];
@@ -92,6 +80,17 @@ class LookUpResponse extends TranslateResponse {
     );
   }
 
+  String? word; // 单词
+  String? tip; // 提示
+  List<WordTag>? tags; // 标签
+  List<WordDefinition>? definitions; // 定义（基本释义）
+  List<WordPronunciation>? pronunciations; // 发音
+  List<WordImage>? images; // 图片
+  List<WordPhrase>? phrases; // 短语
+  List<WordTense>? tenses; // 时态
+  List<WordSentence>? sentences; // 例句
+
+  @override
   Map<String, dynamic> toJson() {
     return {
       'translations': (translations ?? []).map((e) => e.toJson()).toList(),

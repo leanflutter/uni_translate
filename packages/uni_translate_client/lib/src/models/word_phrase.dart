@@ -1,8 +1,5 @@
 // 常用短语/词组
 class WordPhrase {
-  final String text;
-  final List<String> translations;
-
   WordPhrase({
     required this.text,
     required this.translations,
@@ -14,6 +11,9 @@ class WordPhrase {
       translations: List<String>.from(json['translations']),
     );
   }
+
+  final String text;
+  final List<String> translations;
 
   Map<String, dynamic> toJson() {
     return {

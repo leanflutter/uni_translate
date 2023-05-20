@@ -13,24 +13,26 @@ const String _kEngineOptionKeySecretId = 'secretId';
 const String _kEngineOptionKeySecretKey = 'secretKey';
 
 String _signature(String key, String data) {
-  var hmacSha1 = new Hmac(sha1, utf8.encode(key));
+  var hmacSha1 = Hmac(sha1, utf8.encode(key));
   var digest = hmacSha1.convert(utf8.encode(data));
 
   return base64.encode(digest.bytes).toString();
 }
 
 class TencentTranslationEngine extends TranslationEngine {
-  static List<String> optionKeys = [
-    _kEngineOptionKeySecretId,
-    _kEngineOptionKeySecretKey,
-  ];
-
   TencentTranslationEngine({
     required String identifier,
     Map<String, dynamic>? option,
   }) : super(identifier: identifier, option: option);
 
+  static List<String> optionKeys = [
+    _kEngineOptionKeySecretId,
+    _kEngineOptionKeySecretKey,
+  ];
+
+  @override
   String get type => kEngineTypeTencent;
+  @override
   List<String> get supportedScopes => [kScopeTranslate];
 
   String get _optionSecretId => option?[_kEngineOptionKeySecretId] ?? '';
@@ -58,7 +60,7 @@ class TencentTranslationEngine extends TranslationEngine {
     String query = keys.map((key) => '$key=${body[key]}').join('&');
 
     String endpoint = 'tmt.tencentcloudapi.com';
-    String srcStr = 'POST$endpoint/?${query}';
+    String srcStr = 'POST$endpoint/?$query';
     String signature = _signature(_optionSecretKey, srcStr);
 
     body.putIfAbsent('Signature', () => signature);
@@ -116,7 +118,7 @@ class TencentTranslationEngine extends TranslationEngine {
     String query = keys.map((key) => '$key=${body[key]}').join('&');
 
     String endpoint = 'tmt.tencentcloudapi.com';
-    String srcStr = 'POST$endpoint/?${query}';
+    String srcStr = 'POST$endpoint/?$query';
     String signature = _signature(_optionSecretKey, srcStr);
 
     body.putIfAbsent('Signature', () => signature);

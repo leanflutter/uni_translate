@@ -1,8 +1,4 @@
 class WordDefinition {
-  String? type;
-  String? name;
-  List<String>? values;
-
   WordDefinition({
     this.type,
     this.name,
@@ -23,6 +19,10 @@ class WordDefinition {
       values: values,
     );
   }
+
+  String? type;
+  String? name;
+  List<String>? values;
 
   Map<String, dynamic> toJson() {
     return {

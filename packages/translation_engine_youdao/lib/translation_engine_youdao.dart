@@ -4,9 +4,8 @@ import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
+import 'package:translation_engine_youdao/youdao_api_known_errors.dart';
 import 'package:uni_translate_client/uni_translate_client.dart';
-
-import 'youdao_api_known_errors.dart';
 
 const String kEngineTypeYoudao = 'youdao';
 
@@ -22,17 +21,19 @@ String _sha256(String data) {
 }
 
 class YoudaoTranslationEngine extends TranslationEngine {
-  static List<String> optionKeys = [
-    _kEngineOptionKeyAppKey,
-    _kEngineOptionKeyAppSecret,
-  ];
-
   YoudaoTranslationEngine({
     required String identifier,
     Map<String, dynamic>? option,
   }) : super(identifier: identifier, option: option);
 
+  static List<String> optionKeys = [
+    _kEngineOptionKeyAppKey,
+    _kEngineOptionKeyAppSecret,
+  ];
+
+  @override
   String get type => kEngineTypeYoudao;
+  @override
   List<String> get supportedScopes => [kScopeLookUp];
 
   String get _optionAppKey => option?[_kEngineOptionKeyAppKey] ?? '';
@@ -49,13 +50,13 @@ class YoudaoTranslationEngine extends TranslationEngine {
 
     String q = request.word;
     String input = q;
-    if (q.length > 20)
+    if (q.length > 20) {
       input = '${q.substring(0, 10)}${q.length}${q.substring(q.length - 10)}';
+    }
 
     final curtime = (DateTime.now().millisecondsSinceEpoch ~/ 1000);
-    final salt = _md5("translation_engine_youdao");
-    final sign =
-        _sha256('$_optionAppKey$input$salt${curtime}$_optionAppSecret');
+    final salt = _md5('translation_engine_youdao');
+    final sign = _sha256('$_optionAppKey$input$salt$curtime$_optionAppSecret');
 
     Uri uri = Uri.https(
       'openapi.youdao.com',
@@ -149,7 +150,7 @@ class YoudaoTranslationEngine extends TranslationEngine {
           String value = wf['value'];
 
           List<String> values = [value];
-          if (value.indexOf('或') >= 0) {
+          if (value.contains('或')) {
             values = value.split('或');
           }
 

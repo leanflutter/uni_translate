@@ -1,8 +1,6 @@
-import 'models/text_detection.dart';
+import 'package:uni_translate_client/src/models/text_detection.dart';
 
 class DetectLanguageResponse {
-  List<TextDetection>? detections;
-
   DetectLanguageResponse({
     this.detections,
   });
@@ -19,6 +17,8 @@ class DetectLanguageResponse {
       detections: detections,
     );
   }
+
+  List<TextDetection>? detections;
 
   Map<String, dynamic> toJson() {
     return {

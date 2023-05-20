@@ -12,16 +12,18 @@ const String kEngineTypeGoogle = 'google';
 const String _kEngineOptionKeyApiKey = 'apiKey';
 
 class GoogleTranslationEngine extends TranslationEngine {
-  static List<String> optionKeys = [
-    _kEngineOptionKeyApiKey,
-  ];
-
   GoogleTranslationEngine({
     required String identifier,
     Map<String, dynamic>? option,
   }) : super(identifier: identifier, option: option);
 
+  static List<String> optionKeys = [
+    _kEngineOptionKeyApiKey,
+  ];
+
+  @override
   String get type => kEngineTypeGoogle;
+  @override
   List<String> get supportedScopes => [kScopeDetectLanguage, kScopeTranslate];
 
   String get _optionApiKey => option?[_kEngineOptionKeyApiKey] ?? '';

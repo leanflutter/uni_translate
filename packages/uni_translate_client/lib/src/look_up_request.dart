@@ -1,8 +1,6 @@
-import 'translate_request.dart';
+import 'package:uni_translate_client/src/translate_request.dart';
 
 class LookUpRequest extends TranslateRequest {
-  final String word;
-
   LookUpRequest({
     required String sourceLanguage,
     required String targetLanguage,
@@ -21,6 +19,9 @@ class LookUpRequest extends TranslateRequest {
     );
   }
 
+  final String word;
+
+  @override
   Map<String, dynamic> toJson() {
     return {
       'sourceLanguage': sourceLanguage,

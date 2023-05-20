@@ -4,10 +4,9 @@ version: 0.1.1
 homepage: https://github.com/biyidev/uni_translate
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
-  uni_translate_client: ^0.1.1
   translation_engine_baidu: ^0.1.1
   translation_engine_caiyun: ^0.1.1
   translation_engine_deepl: ^0.1.1
@@ -15,6 +14,7 @@ dependencies:
   translation_engine_iciba: ^0.1.1
   translation_engine_tencent: ^0.1.1
   translation_engine_youdao: ^0.1.1
+  uni_translate_client: ^0.1.1
 
 dev_dependencies:
   test: ^1.0.0

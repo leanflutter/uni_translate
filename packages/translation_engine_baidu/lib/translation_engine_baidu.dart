@@ -17,17 +17,18 @@ String _md5(String data) {
 }
 
 class BaiduTranslationEngine extends TranslationEngine {
+  BaiduTranslationEngine({
+    required String identifier,
+    Map<String, dynamic>? option,
+  }) : super(identifier: identifier, option: option);
   static List<String> optionKeys = [
     _kEngineOptionKeyAppId,
     _kEngineOptionKeyAppKey,
   ];
 
-  BaiduTranslationEngine({
-    required String identifier,
-    Map<String, dynamic>? option,
-  }) : super(identifier: identifier, option: option);
-
+  @override
   String get type => kEngineTypeBaidu;
+  @override
   List<String> get supportedScopes => [kScopeDetectLanguage, kScopeTranslate];
 
   String get _optionAppId => option?[_kEngineOptionKeyAppId] ?? '';
@@ -62,7 +63,7 @@ class BaiduTranslationEngine extends TranslationEngine {
     String q = request.texts.first;
 
     final salt = Random().nextInt(999999);
-    final sign = _md5('$_optionAppId${q}$salt$_optionAppKey');
+    final sign = _md5('$_optionAppId$q$salt$_optionAppKey');
 
     Uri uri = Uri.https(
       'fanyi-api.baidu.com',
@@ -110,7 +111,7 @@ class BaiduTranslationEngine extends TranslationEngine {
     String q = request.text;
 
     final salt = Random().nextInt(999999);
-    final sign = _md5('$_optionAppId${q}$salt$_optionAppKey');
+    final sign = _md5('$_optionAppId$q$salt$_optionAppKey');
 
     Uri uri = Uri.https(
       'fanyi-api.baidu.com',

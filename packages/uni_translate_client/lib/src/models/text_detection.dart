@@ -1,7 +1,4 @@
 class TextDetection {
-  String detectedLanguage;
-  String text;
-
   TextDetection({
     required this.detectedLanguage,
     required this.text,
@@ -13,6 +10,9 @@ class TextDetection {
       text: json['text'],
     );
   }
+
+  String detectedLanguage;
+  String text;
 
   Map<String, dynamic> toJson() {
     return {

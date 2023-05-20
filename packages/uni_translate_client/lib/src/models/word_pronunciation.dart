@@ -1,8 +1,4 @@
 class WordPronunciation {
-  String? type;
-  String? phoneticSymbol;
-  String? audioUrl;
-
   WordPronunciation({
     this.type,
     this.phoneticSymbol,
@@ -16,6 +12,10 @@ class WordPronunciation {
       audioUrl: json['audioUrl'],
     );
   }
+
+  String? type;
+  String? phoneticSymbol;
+  String? audioUrl;
 
   Map<String, dynamic> toJson() {
     return {

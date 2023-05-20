@@ -1,6 +1,4 @@
 class WordImage {
-  String url;
-
   WordImage({
     required this.url,
   });
@@ -10,6 +8,8 @@ class WordImage {
       url: json['url'],
     );
   }
+
+  String url;
 
   Map<String, dynamic> toJson() {
     return {

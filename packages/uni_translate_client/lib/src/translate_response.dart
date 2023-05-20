@@ -1,8 +1,6 @@
-import 'models/text_translation.dart';
+import 'package:uni_translate_client/src/models/text_translation.dart';
 
 class TranslateResponse {
-  List<TextTranslation>? translations;
-
   TranslateResponse({
     this.translations,
   });
@@ -19,6 +17,8 @@ class TranslateResponse {
       translations: translations,
     );
   }
+
+  List<TextTranslation>? translations;
 
   Map<String, dynamic> toJson() {
     return {

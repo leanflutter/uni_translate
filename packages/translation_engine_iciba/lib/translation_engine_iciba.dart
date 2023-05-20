@@ -11,16 +11,18 @@ const String kEngineTypeIciba = 'iciba';
 const String _kEngineOptionKeyApiKey = 'apiKey';
 
 class IcibaTranslationEngine extends TranslationEngine {
-  static List<String> optionKeys = [
-    _kEngineOptionKeyApiKey,
-  ];
-
   IcibaTranslationEngine({
     required String identifier,
     Map<String, dynamic>? option,
   }) : super(identifier: identifier, option: option);
 
+  static List<String> optionKeys = [
+    _kEngineOptionKeyApiKey,
+  ];
+
+  @override
   String get type => kEngineTypeIciba;
+  @override
   List<String> get supportedScopes => [kScopeLookUp];
 
   String get _optionApiKey => option?[_kEngineOptionKeyApiKey] ?? '';
@@ -117,10 +119,10 @@ class IcibaTranslationEngine extends TranslationEngine {
               values: values,
             );
           })
-          .where((e) => (e.values ?? []).length > 0)
+          .where((e) => (e.values ?? []).isNotEmpty)
           .toList();
 
-      if ((lookUpResponse.tenses ?? []).length == 0) {
+      if ((lookUpResponse.tenses ?? []).isEmpty) {
         lookUpResponse.tenses = null;
       }
     }

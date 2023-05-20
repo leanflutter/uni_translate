@@ -1,9 +1,4 @@
 class LanguagePair {
-  final String? sourceLanguage;
-  final String? sourceLanguageId;
-  final String? targetLanguage;
-  final String? targetLanguageId;
-
   LanguagePair({
     this.sourceLanguage,
     this.sourceLanguageId,
@@ -19,6 +14,11 @@ class LanguagePair {
       targetLanguageId: json['targetLanguageId'],
     );
   }
+
+  final String? sourceLanguage;
+  final String? sourceLanguageId;
+  final String? targetLanguage;
+  final String? targetLanguageId;
 
   Map<String, dynamic> toJson() {
     return {

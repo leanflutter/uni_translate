@@ -1,27 +1,27 @@
-import 'detect_language_request.dart';
-import 'detect_language_response.dart';
-import 'look_up_request.dart';
-import 'look_up_response.dart';
-import 'translate_request.dart';
-import 'translate_response.dart';
-import 'models/language_pair.dart';
+import 'package:uni_translate_client/src/detect_language_request.dart';
+import 'package:uni_translate_client/src/detect_language_response.dart';
+import 'package:uni_translate_client/src/look_up_request.dart';
+import 'package:uni_translate_client/src/look_up_response.dart';
+import 'package:uni_translate_client/src/models/language_pair.dart';
+import 'package:uni_translate_client/src/translate_request.dart';
+import 'package:uni_translate_client/src/translate_response.dart';
 
 const kScopeDetectLanguage = 'detectLanguage';
 const kScopeLookUp = 'lookUp';
 const kScopeTranslate = 'translate';
 
 abstract class TranslationEngine {
+  TranslationEngine({
+    required this.identifier,
+    this.option,
+  });
+
   String get type => throw UnimplementedError();
   List<String> get supportedScopes => throw UnimplementedError();
 
   String identifier;
   Map<String, dynamic>? option;
   bool disabled = false;
-
-  TranslationEngine({
-    required this.identifier,
-    this.option,
-  });
 
   Future<List<LanguagePair>> getSupportedLanguagePairs() {
     throw UnimplementedError();

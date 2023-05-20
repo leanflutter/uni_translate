@@ -28,16 +28,17 @@ const Map<String, String> _knownErrors = {
 };
 
 class DeepLTranslationEngine extends TranslationEngine {
-  static List<String> optionKeys = [
-    _kEngineOptionKeyAuthKey,
-  ];
-
   DeepLTranslationEngine({
     required String identifier,
     Map<String, dynamic>? option,
   }) : super(identifier: identifier, option: option);
+  static List<String> optionKeys = [
+    _kEngineOptionKeyAuthKey,
+  ];
 
+  @override
   String get type => kEngineTypeDeepL;
+  @override
   List<String> get supportedScopes => [kScopeTranslate];
 
   bool get _isDeepLFree => _optionAuthKey.endsWith(':fx');
@@ -68,7 +69,7 @@ class DeepLTranslationEngine extends TranslationEngine {
     var uri = Uri.https(host, '/v2/translate', queryParameters);
 
     var response = await http.post(uri, headers: {
-      HttpHeaders.contentTypeHeader: "application/json; charset=utf-8"
+      HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8'
     });
 
     String? errorMessage;
