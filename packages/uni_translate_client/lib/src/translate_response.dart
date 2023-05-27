@@ -1,9 +1,11 @@
+import 'dart:async';
+
 import 'package:uni_translate_client/src/models/text_translation.dart';
 
 class TranslateResponse {
   TranslateResponse({
     this.translations,
-  });
+  }) : _controller = StreamController<TranslateResponse>(sync: true);
 
   factory TranslateResponse.fromJson(Map<String, dynamic> json) {
     List<TextTranslation> translations = [];
@@ -18,6 +20,12 @@ class TranslateResponse {
     );
   }
 
+  final StreamController<TranslateResponse> _controller;
+
+  EventSink<TranslateResponse> get sink => _controller.sink;
+  Stream<TranslateResponse> get stream => _controller.stream;
+
+  bool generating = false;
   List<TextTranslation>? translations;
 
   Map<String, dynamic> toJson() {

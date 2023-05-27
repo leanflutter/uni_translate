@@ -1,3 +1,7 @@
+## 0.1.3
+
+* bump uni_translate_client to 0.1.3
+
 ## 0.1.2
 
 * chore: bump dart to 3.0.0 & fix lint issues
