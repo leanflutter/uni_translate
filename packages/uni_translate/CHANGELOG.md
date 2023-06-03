@@ -1,3 +1,7 @@
+## 0.1.4
+
+* bump translation_engine_openai to 0.1.4
+
 ## 0.1.3
 
 * bump uni_translate_client to 0.1.3

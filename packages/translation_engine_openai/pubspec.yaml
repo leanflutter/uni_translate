@@ -1,6 +1,6 @@
 name: translation_engine_openai
 description: OpenAI translation engine
-version: 0.1.3
+version: 0.1.4
 homepage: https://github.com/biyidev/uni_translate
 
 environment:
