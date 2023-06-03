@@ -7,5 +7,5 @@ environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
-  dart_openai: ^1.9.92
+  dart_openai: ^2.0.1
   uni_translate_client: ^0.1.3

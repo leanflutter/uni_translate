@@ -12,7 +12,8 @@ const String _kEngineOptionKeyApiKey = 'apiKey';
 const String _kEngineOptionKeyPrompt = 'prompt';
 
 const String _kDefaultPrompt =
-    'You are a translation engine that can only translate text and cannot interpret it.';
+    'You are a translation engine that can only translate text and cannot interpret it. '
+    'translate from \${sourceLanguage} to \${targetLanguage}';
 
 class OpenAITranslationEngine extends TranslationEngine {
   OpenAITranslationEngine({
@@ -58,16 +59,14 @@ class OpenAITranslationEngine extends TranslationEngine {
       OpenAI.baseUrl = _optionBaseUrl;
     }
 
-    Stream<OpenAIStreamChatCompletionModel> chatCompletionModel =
-        OpenAI.instance.chat.createStream(
+    final chatCompletionModel = OpenAI.instance.chat.createStream(
       model: 'gpt-3.5-turbo',
       messages: [
         OpenAIChatCompletionChoiceMessageModel(
           role: OpenAIChatMessageRole.system,
-          content: [
-            _optionPrompt,
-            'translate from ${request.sourceLanguage} to ${request.targetLanguage}'
-          ].join('\n'),
+          content: _optionPrompt
+              .replaceFirst('\${sourceLanguage}', request.sourceLanguage!)
+              .replaceFirst('\${targetLanguage}', request.targetLanguage!),
         ),
         OpenAIChatCompletionChoiceMessageModel(
           role: OpenAIChatMessageRole.user,
@@ -100,8 +99,15 @@ class OpenAITranslationEngine extends TranslationEngine {
         translateResponse.sink.close();
       },
       onError: (Object error, StackTrace stackTrace) {
+        translateResponse.generating = false;
+        translateResponse.sink.add(translateResponse);
         translateResponse.sink.addError(error, stackTrace);
+        if (!completer.isCompleted) {
+          completer.completeError(error, stackTrace);
+        }
+        translateResponse.sink.close();
       },
+      cancelOnError: true,
     );
     return completer.future;
   }
