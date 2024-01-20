@@ -29,8 +29,13 @@ class OpenAITranslationEngine extends TranslationEngine {
 
   @override
   String get type => kEngineTypeOpenAI;
+
   @override
-  List<String> get supportedScopes => [kScopeTranslate];
+  List<TranslationEngineScope> get supportedScopes {
+    return [
+      TranslationEngineScope.translate,
+    ];
+  }
 
   String get _optionBaseUrl => option?[_kEngineOptionKeyBaseUrl] ?? '';
   String get _optionApiKey => option?[_kEngineOptionKeyApiKey] ?? '';
@@ -51,8 +56,10 @@ class OpenAITranslationEngine extends TranslationEngine {
   Future<TranslateResponse> translate(TranslateRequest request) async {
     Completer<TranslateResponse> completer = Completer<TranslateResponse>();
 
-    TranslateResponse translateResponse = TranslateResponse()
-      ..generating = true;
+    StreamTranslateResponse translateResponse = StreamTranslateResponse(
+      translations: [],
+      streamController: StreamController<TranslateResponse>(sync: true),
+    );
 
     OpenAI.apiKey = _optionApiKey;
     if (_optionBaseUrl.isNotEmpty) {
@@ -90,25 +97,19 @@ class OpenAITranslationEngine extends TranslationEngine {
         if (content == null || content.isEmpty) return;
         translatedText += content.first.text!;
 
-        TextTranslation textTranslation;
-        if (translateResponse.translations == null) {
-          textTranslation = TextTranslation(text: translatedText);
+        final textTranslation = TextTranslation(text: translatedText);
+        if (translateResponse.translations.isEmpty) {
           translateResponse.translations = [textTranslation];
           completer.complete(translateResponse);
         } else {
-          textTranslation = translateResponse.translations!.first;
-          textTranslation.text = translatedText;
+          translateResponse.translations = [textTranslation];
         }
         translateResponse.sink.add(translateResponse);
       },
       onDone: () {
-        translateResponse.generating = false;
-        translateResponse.sink.add(translateResponse);
         translateResponse.sink.close();
       },
       onError: (Object error, StackTrace stackTrace) {
-        translateResponse.generating = false;
-        translateResponse.sink.add(translateResponse);
         translateResponse.sink.addError(error, stackTrace);
         if (!completer.isCompleted) {
           completer.completeError(error, stackTrace);

@@ -1,26 +1,20 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'word_tense.g.dart';
+
+@JsonSerializable()
 class WordTense {
-  WordTense({
+  const WordTense({
     this.type,
     this.name,
     this.values,
   });
-  factory WordTense.fromJson(Map<String, dynamic> json) {
-    return WordTense(
-      type: json['type'],
-      name: json['name'],
-      values: List<String>.from(json['values']),
-    );
-  }
+  factory WordTense.fromJson(Map<String, dynamic> json) =>
+      _$WordTenseFromJson(json);
 
-  String? type;
-  String? name;
-  List<String>? values;
+  final String? type;
+  final String? name;
+  final List<String>? values;
 
-  Map<String, dynamic> toJson() {
-    return {
-      'type': type,
-      'name': name,
-      'values': values,
-    }..removeWhere((key, value) => value == null);
-  }
+  Map<String, dynamic> toJson() => _$WordTenseToJson(this);
 }

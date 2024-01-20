@@ -27,8 +27,13 @@ class IBMWatsonTranslationEngine extends TranslationEngine {
 
   @override
   String get type => kEngineTypeIBMWatson;
+
   @override
-  List<String> get supportedScopes => [kScopeTranslate];
+  List<TranslationEngineScope> get supportedScopes {
+    return [
+      TranslationEngineScope.translate,
+    ];
+  }
 
   String get _optionApiKey => option?[_kEngineOptionKeyApiKey] ?? '';
   String get _optionApiUrl => option?[_kEngineOptionKeyApiUrl] ?? '';
@@ -45,7 +50,7 @@ class IBMWatsonTranslationEngine extends TranslationEngine {
 
   @override
   Future<TranslateResponse> translate(TranslateRequest request) async {
-    TranslateResponse translateResponse = TranslateResponse();
+    List<TextTranslation> translations = [];
 
     String modelId = '${request.sourceLanguage}-${request.targetLanguage}';
 
@@ -65,10 +70,12 @@ class IBMWatsonTranslationEngine extends TranslationEngine {
 
     Map<String, dynamic> data = json.decode(utf8.decode(response.bodyBytes));
 
-    translateResponse.translations = (data['translations'] as List).map((e) {
+    translations = (data['translations'] as List).map((e) {
       return TextTranslation(text: e['translation']);
     }).toList();
 
-    return translateResponse;
+    return TranslateResponse(
+      translations: translations,
+    );
   }
 }

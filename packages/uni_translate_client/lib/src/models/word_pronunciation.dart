@@ -1,27 +1,21 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'word_pronunciation.g.dart';
+
+@JsonSerializable()
 class WordPronunciation {
-  WordPronunciation({
+  const WordPronunciation({
     this.type,
     this.phoneticSymbol,
     this.audioUrl,
   });
 
-  factory WordPronunciation.fromJson(Map<String, dynamic> json) {
-    return WordPronunciation(
-      type: json['type'],
-      phoneticSymbol: json['phoneticSymbol'],
-      audioUrl: json['audioUrl'],
-    );
-  }
+  factory WordPronunciation.fromJson(Map<String, dynamic> json) =>
+      _$WordPronunciationFromJson(json);
 
-  String? type;
-  String? phoneticSymbol;
-  String? audioUrl;
+  final String? type;
+  final String? phoneticSymbol;
+  final String? audioUrl;
 
-  Map<String, dynamic> toJson() {
-    return {
-      'type': type,
-      'phoneticSymbol': phoneticSymbol,
-      'audioUrl': audioUrl,
-    }..removeWhere((key, value) => value == null);
-  }
+  Map<String, dynamic> toJson() => _$WordPronunciationToJson(this);
 }

@@ -25,7 +25,11 @@ class CaiyunTranslationEngine extends TranslationEngine {
   String get type => kEngineTypeCaiyun;
 
   @override
-  List<String> get supportedScopes => const [kScopeTranslate];
+  List<TranslationEngineScope> get supportedScopes {
+    return [
+      TranslationEngineScope.translate,
+    ];
+  }
 
   String get _optionToken => option?[_kEngineOptionKeyToken] ?? '';
   String get _optionRequestId => option?[_kEngineOptionKeyRequestId] ?? '';
@@ -52,9 +56,7 @@ class CaiyunTranslationEngine extends TranslationEngine {
 
   @override
   Future<TranslateResponse> translate(TranslateRequest request) async {
-    TranslateResponse translateResponse = TranslateResponse(
-      translations: [],
-    );
+    List<TextTranslation> translations = [];
 
     String transType = 'auto';
     if (request.sourceLanguage != null && request.targetLanguage != null) {
@@ -80,12 +82,14 @@ class CaiyunTranslationEngine extends TranslationEngine {
       throw UniTranslateClientError(message: data['message']);
     }
 
-    translateResponse.translations = (data['target'] as List).map(
+    translations = (data['target'] as List).map(
       (e) {
         return TextTranslation(text: e);
       },
     ).toList();
 
-    return translateResponse;
+    return TranslateResponse(
+      translations: translations,
+    );
   }
 }

@@ -17,6 +17,7 @@ export 'src/models/word_tense.dart';
 export 'src/translate_request.dart';
 export 'src/translate_response.dart';
 export 'src/translation_engine.dart';
+export 'src/translation_engine_scope.dart';
 export 'src/uni_translate_client.dart';
 export 'src/uni_translate_client_adapter.dart';
 export 'src/uni_translate_client_error.dart';

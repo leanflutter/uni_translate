@@ -38,8 +38,13 @@ class DeepLTranslationEngine extends TranslationEngine {
 
   @override
   String get type => kEngineTypeDeepL;
+
   @override
-  List<String> get supportedScopes => [kScopeTranslate];
+  List<TranslationEngineScope> get supportedScopes {
+    return [
+      TranslationEngineScope.translate,
+    ];
+  }
 
   bool get _isDeepLFree => _optionAuthKey.endsWith(':fx');
   String get _optionAuthKey => option?[_kEngineOptionKeyAuthKey] ?? '';
@@ -56,7 +61,7 @@ class DeepLTranslationEngine extends TranslationEngine {
 
   @override
   Future<TranslateResponse> translate(TranslateRequest request) async {
-    TranslateResponse translateResponse = TranslateResponse();
+    List<TextTranslation> translations = [];
 
     Map<String, String> queryParameters = {
       'auth_key': _optionAuthKey,
@@ -79,7 +84,7 @@ class DeepLTranslationEngine extends TranslationEngine {
 
       if (data['translations'] != null) {
         Iterable l = data['translations'] as List;
-        translateResponse.translations = l
+        translations = l
             .map((e) => TextTranslation(
                   detectedSourceLanguage: e['detected_source_language'],
                   text: e['text'],
@@ -106,6 +111,8 @@ class DeepLTranslationEngine extends TranslationEngine {
       );
     }
 
-    return translateResponse;
+    return TranslateResponse(
+      translations: translations,
+    );
   }
 }

@@ -5,10 +5,7 @@ import 'package:uni_translate_client/src/look_up_response.dart';
 import 'package:uni_translate_client/src/models/language_pair.dart';
 import 'package:uni_translate_client/src/translate_request.dart';
 import 'package:uni_translate_client/src/translate_response.dart';
-
-const kScopeDetectLanguage = 'detectLanguage';
-const kScopeLookUp = 'lookUp';
-const kScopeTranslate = 'translate';
+import 'package:uni_translate_client/src/translation_engine_scope.dart';
 
 abstract class TranslationEngine {
   TranslationEngine({
@@ -17,7 +14,8 @@ abstract class TranslationEngine {
   });
 
   String get type => throw UnimplementedError();
-  List<String> get supportedScopes => throw UnimplementedError();
+  List<TranslationEngineScope> get supportedScopes =>
+      throw UnimplementedError();
 
   String identifier;
   Map<String, dynamic>? option;
@@ -37,7 +35,7 @@ abstract class TranslationEngine {
     return {
       'identifier': identifier,
       'type': type,
-      'supportedScopes': supportedScopes,
+      'supportedScopes': supportedScopes.map((e) => e.name).toList(),
       'disabled': disabled,
     };
   }

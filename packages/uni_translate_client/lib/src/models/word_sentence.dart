@@ -1,23 +1,19 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'word_sentence.g.dart';
+
+@JsonSerializable()
 class WordSentence {
-  WordSentence({
+  const WordSentence({
     required this.text,
     required this.translations,
   });
 
-  factory WordSentence.fromJson(Map<String, dynamic> json) {
-    return WordSentence(
-      text: json['text'],
-      translations: List<String>.from(json['translations']),
-    );
-  }
+  factory WordSentence.fromJson(Map<String, dynamic> json) =>
+      _$WordSentenceFromJson(json);
 
   final String text;
   final List<String> translations;
 
-  Map<String, dynamic> toJson() {
-    return {
-      'text': text,
-      'translations': translations,
-    }..removeWhere((key, value) => value == null);
-  }
+  Map<String, dynamic> toJson() => _$WordSentenceToJson(this);
 }

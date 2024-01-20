@@ -32,16 +32,22 @@ class TencentTranslationEngine extends TranslationEngine {
 
   @override
   String get type => kEngineTypeTencent;
+
   @override
-  List<String> get supportedScopes => [kScopeTranslate];
+  List<TranslationEngineScope> get supportedScopes {
+    return [
+      TranslationEngineScope.translate,
+    ];
+  }
 
   String get _optionSecretId => option?[_kEngineOptionKeySecretId] ?? '';
   String get _optionSecretKey => option?[_kEngineOptionKeySecretKey] ?? '';
 
   @override
   Future<DetectLanguageResponse> detectLanguage(
-      DetectLanguageRequest request) async {
-    DetectLanguageResponse detectLanguageResponse = DetectLanguageResponse();
+    DetectLanguageRequest request,
+  ) async {
+    List<TextDetection> detections = [];
 
     Map<String, String> body = {
       'Action': 'LanguageDetect',
@@ -80,14 +86,16 @@ class TencentTranslationEngine extends TranslationEngine {
 
     Map<String, dynamic> data = json.decode(utf8.decode(response.bodyBytes));
 
-    detectLanguageResponse.detections = [
+    detections = [
       TextDetection(
         detectedLanguage: data['Response']['Lang'],
         text: request.texts.first,
       ),
     ];
 
-    return detectLanguageResponse;
+    return DetectLanguageResponse(
+      detections: detections,
+    );
   }
 
   @override
@@ -97,7 +105,7 @@ class TencentTranslationEngine extends TranslationEngine {
 
   @override
   Future<TranslateResponse> translate(TranslateRequest request) async {
-    TranslateResponse translateResponse = TranslateResponse();
+    List<TextTranslation> translations = [];
 
     Map<String, String> body = {
       'Action': 'TextTranslate',
@@ -144,10 +152,12 @@ class TencentTranslationEngine extends TranslationEngine {
         message: data['Response']['Error']['Message'],
       );
     }
-    translateResponse.translations = [
+    translations = [
       TextTranslation(text: data['Response']['TargetText']),
     ];
 
-    return translateResponse;
+    return TranslateResponse(
+      translations: translations,
+    );
   }
 }

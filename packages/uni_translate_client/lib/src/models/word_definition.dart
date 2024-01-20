@@ -1,34 +1,21 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'word_definition.g.dart';
+
+@JsonSerializable()
 class WordDefinition {
-  WordDefinition({
+  const WordDefinition({
     this.type,
     this.name,
     this.values,
   });
 
-  factory WordDefinition.fromJson(Map<String, dynamic> json) {
-    List<String>? values;
+  factory WordDefinition.fromJson(Map<String, dynamic> json) =>
+      _$WordDefinitionFromJson(json);
 
-    if (json['values'] != null) {
-      Iterable l = json['values'] as List;
-      values = l.map((item) => item.toString()).toList();
-    }
+  final String? type;
+  final String? name;
+  final List<String>? values;
 
-    return WordDefinition(
-      type: json['type'],
-      name: json['name'],
-      values: values,
-    );
-  }
-
-  String? type;
-  String? name;
-  List<String>? values;
-
-  Map<String, dynamic> toJson() {
-    return {
-      'type': type,
-      'name': name,
-      'values': values,
-    }..removeWhere((key, value) => value == null);
-  }
+  Map<String, dynamic> toJson() => _$WordDefinitionToJson(this);
 }

@@ -3,7 +3,6 @@ library translation_engine_google;
 import 'dart:convert';
 import 'dart:io';
 
-// import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 import 'package:uni_translate_client/uni_translate_client.dart';
 
@@ -23,8 +22,14 @@ class GoogleTranslationEngine extends TranslationEngine {
 
   @override
   String get type => kEngineTypeGoogle;
+
   @override
-  List<String> get supportedScopes => [kScopeDetectLanguage, kScopeTranslate];
+  List<TranslationEngineScope> get supportedScopes {
+    return [
+      TranslationEngineScope.detectLanguage,
+      TranslationEngineScope.translate,
+    ];
+  }
 
   String get _optionApiKey => option?[_kEngineOptionKeyApiKey] ?? '';
 
@@ -32,7 +37,7 @@ class GoogleTranslationEngine extends TranslationEngine {
   Future<DetectLanguageResponse> detectLanguage(
     DetectLanguageRequest request,
   ) async {
-    DetectLanguageResponse detectLanguageResponse = DetectLanguageResponse();
+    List<TextDetection> detections = [];
 
     var response = await http.post(
       Uri.https(
@@ -57,20 +62,21 @@ class GoogleTranslationEngine extends TranslationEngine {
     }
 
     try {
-      detectLanguageResponse.detections =
-          List.from(data['data']['detections'][0])
-              .map(
-                (e) => TextDetection(
-                  detectedLanguage: e['language'],
-                  text: request.texts.first,
-                ),
-              )
-              .toList();
+      detections = List.from(data['data']['detections'][0])
+          .map(
+            (e) => TextDetection(
+              detectedLanguage: e['language'],
+              text: request.texts.first,
+            ),
+          )
+          .toList();
     } catch (error) {
       print(error);
     }
 
-    return detectLanguageResponse;
+    return DetectLanguageResponse(
+      detections: detections,
+    );
   }
 
   @override
@@ -80,7 +86,7 @@ class GoogleTranslationEngine extends TranslationEngine {
 
   @override
   Future<TranslateResponse> translate(TranslateRequest request) async {
-    TranslateResponse translateResponse = TranslateResponse();
+    List<TextTranslation> translations = [];
 
     var response = await http.post(
       Uri.https(
@@ -108,10 +114,12 @@ class GoogleTranslationEngine extends TranslationEngine {
       );
     }
 
-    translateResponse.translations = List.from(data['data']['translations'])
+    translations = List.from(data['data']['translations'])
         .map((e) => TextTranslation(text: e['translatedText']))
         .toList();
 
-    return translateResponse;
+    return TranslateResponse(
+      translations: translations,
+    );
   }
 }

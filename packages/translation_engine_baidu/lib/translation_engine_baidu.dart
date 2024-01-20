@@ -28,8 +28,14 @@ class BaiduTranslationEngine extends TranslationEngine {
 
   @override
   String get type => kEngineTypeBaidu;
+
   @override
-  List<String> get supportedScopes => [kScopeDetectLanguage, kScopeTranslate];
+  List<TranslationEngineScope> get supportedScopes {
+    return [
+      TranslationEngineScope.detectLanguage,
+      TranslationEngineScope.translate,
+    ];
+  }
 
   String get _optionAppId => option?[_kEngineOptionKeyAppId] ?? '';
   String get _optionAppKey => option?[_kEngineOptionKeyAppKey] ?? '';
@@ -58,7 +64,7 @@ class BaiduTranslationEngine extends TranslationEngine {
   Future<DetectLanguageResponse> detectLanguage(
     DetectLanguageRequest request,
   ) async {
-    DetectLanguageResponse detectLanguageResponse = DetectLanguageResponse();
+    List<TextDetection> detections = [];
 
     String q = request.texts.first;
 
@@ -89,14 +95,16 @@ class BaiduTranslationEngine extends TranslationEngine {
       );
     }
 
-    detectLanguageResponse.detections = [
+    detections = [
       TextDetection(
         detectedLanguage: data['data']['src'],
         text: q,
       ),
     ];
 
-    return detectLanguageResponse;
+    return DetectLanguageResponse(
+      detections: detections,
+    );
   }
 
   @override
@@ -106,7 +114,7 @@ class BaiduTranslationEngine extends TranslationEngine {
 
   @override
   Future<TranslateResponse> translate(TranslateRequest request) async {
-    TranslateResponse translateResponse = TranslateResponse();
+    List<TextTranslation> translations = [];
 
     String q = request.text;
 
@@ -140,12 +148,14 @@ class BaiduTranslationEngine extends TranslationEngine {
       );
     }
 
-    translateResponse.translations = (data['trans_result'] as List).map((e) {
+    translations = (data['trans_result'] as List).map((e) {
       return TextTranslation(
         text: e['dst'],
       );
     }).toList();
 
-    return translateResponse;
+    return TranslateResponse(
+      translations: translations,
+    );
   }
 }

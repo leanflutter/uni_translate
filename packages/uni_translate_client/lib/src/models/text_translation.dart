@@ -1,27 +1,34 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'text_translation.g.dart';
+
+@JsonSerializable()
 class TextTranslation {
-  TextTranslation({
+  const TextTranslation({
     this.detectedSourceLanguage,
     required this.text,
     this.audioUrl,
   });
 
-  factory TextTranslation.fromJson(Map<String, dynamic> json) {
+  factory TextTranslation.fromJson(Map<String, dynamic> json) =>
+      _$TextTranslationFromJson(json);
+
+  final String? detectedSourceLanguage;
+  final String text;
+  final String? audioUrl;
+
+  Map<String, dynamic> toJson() => _$TextTranslationToJson(this);
+
+  copyWith({
+    String? detectedSourceLanguage,
+    String? text,
+    String? audioUrl,
+  }) {
     return TextTranslation(
-      detectedSourceLanguage: json['detectedSourceLanguage'],
-      text: json['text'],
-      audioUrl: json['audioUrl'],
+      detectedSourceLanguage:
+          detectedSourceLanguage ?? this.detectedSourceLanguage,
+      text: text ?? this.text,
+      audioUrl: audioUrl ?? this.audioUrl,
     );
-  }
-
-  String? detectedSourceLanguage;
-  String text;
-  String? audioUrl;
-
-  Map<String, dynamic> toJson() {
-    return {
-      'detectedSourceLanguage': detectedSourceLanguage,
-      'text': text,
-      'audioUrl': audioUrl,
-    };
   }
 }

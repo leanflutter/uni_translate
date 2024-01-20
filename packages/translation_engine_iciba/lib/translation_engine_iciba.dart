@@ -22,8 +22,13 @@ class IcibaTranslationEngine extends TranslationEngine {
 
   @override
   String get type => kEngineTypeIciba;
+
   @override
-  List<String> get supportedScopes => [kScopeLookUp];
+  List<TranslationEngineScope> get supportedScopes {
+    return [
+      TranslationEngineScope.lookUp,
+    ];
+  }
 
   String get _optionApiKey => option?[_kEngineOptionKeyApiKey] ?? '';
 
@@ -34,7 +39,16 @@ class IcibaTranslationEngine extends TranslationEngine {
 
   @override
   Future<LookUpResponse> lookUp(LookUpRequest request) async {
-    LookUpResponse lookUpResponse = LookUpResponse();
+    List<TextTranslation> translations = [];
+    String? word;
+    String? tip;
+    List<WordTag>? tags;
+    List<WordDefinition>? definitions;
+    List<WordPronunciation>? pronunciations;
+    List<WordImage>? images;
+    List<WordPhrase>? phrases;
+    List<WordTense>? tenses;
+    List<WordSentence>? sentences;
 
     if (!(request.sourceLanguage == 'en' && request.targetLanguage == 'zh')) {
       throw UniTranslateClientError(message: 'Not Supported');
@@ -58,13 +72,13 @@ class IcibaTranslationEngine extends TranslationEngine {
 
     Map<String, dynamic> data = json.decode(utf8.decode(response.bodyBytes));
 
-    lookUpResponse.word = data['word_name'];
+    word = data['word_name'];
 
     var symbol = data['symbols'][0];
     var parts = symbol['parts'];
 
     if (parts != null) {
-      lookUpResponse.definitions = (parts as List).map((e) {
+      definitions = (parts as List).map((e) {
         String name = e['part'];
         List<String> values =
             (e['means'] as List).map((e) => e.toString()).toList();
@@ -75,7 +89,7 @@ class IcibaTranslationEngine extends TranslationEngine {
         );
       }).toList();
 
-      lookUpResponse.pronunciations = [
+      pronunciations = [
         WordPronunciation(
           type: 'uk',
           phoneticSymbol: symbol['ph_en'],
@@ -103,7 +117,7 @@ class IcibaTranslationEngine extends TranslationEngine {
         'word_er': 'word_er',
         'word_est': 'word_est',
       };
-      lookUpResponse.tenses = (data['exchange'] as Map)
+      tenses = (data['exchange'] as Map)
           .keys
           .map((k) {
             String name = map[k] ?? '';
@@ -122,17 +136,27 @@ class IcibaTranslationEngine extends TranslationEngine {
           .where((e) => (e.values ?? []).isNotEmpty)
           .toList();
 
-      if ((lookUpResponse.tenses ?? []).isEmpty) {
-        lookUpResponse.tenses = null;
+      if (tenses.isEmpty) {
+        tenses = null;
       }
     }
 
-    if ((lookUpResponse.pronunciations ?? []).isEmpty &&
-        (lookUpResponse.definitions ?? []).isEmpty) {
+    if ((pronunciations ?? []).isEmpty && (definitions ?? []).isEmpty) {
       throw UniTranslateClientError(message: 'Resource not found.');
     }
 
-    return lookUpResponse;
+    return LookUpResponse(
+      translations: translations,
+      word: word,
+      tip: tip,
+      tags: tags,
+      definitions: definitions,
+      pronunciations: pronunciations,
+      images: images,
+      phrases: phrases,
+      tenses: tenses,
+      sentences: sentences,
+    );
   }
 
   @override

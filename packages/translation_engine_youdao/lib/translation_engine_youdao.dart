@@ -33,8 +33,13 @@ class YoudaoTranslationEngine extends TranslationEngine {
 
   @override
   String get type => kEngineTypeYoudao;
+
   @override
-  List<String> get supportedScopes => [kScopeLookUp];
+  List<TranslationEngineScope> get supportedScopes {
+    return [
+      TranslationEngineScope.lookUp,
+    ];
+  }
 
   String get _optionAppKey => option?[_kEngineOptionKeyAppKey] ?? '';
   String get _optionAppSecret => option?[_kEngineOptionKeyAppSecret] ?? '';
@@ -46,7 +51,16 @@ class YoudaoTranslationEngine extends TranslationEngine {
 
   @override
   Future<LookUpResponse> lookUp(LookUpRequest request) async {
-    LookUpResponse lookUpResponse = LookUpResponse();
+    List<TextTranslation> translations = [];
+    String? word;
+    String? tip;
+    List<WordTag>? tags;
+    List<WordDefinition>? definitions;
+    List<WordPronunciation>? pronunciations;
+    List<WordImage>? images;
+    List<WordPhrase>? phrases;
+    List<WordTense>? tenses;
+    List<WordSentence>? sentences;
 
     String q = request.word;
     String input = q;
@@ -92,15 +106,15 @@ class YoudaoTranslationEngine extends TranslationEngine {
     var tSpeakUrl = data['tSpeakUrl'];
 
     if (translation != null) {
-      lookUpResponse.translations =
-          (translation as List).map((e) => TextTranslation(text: e)).toList();
-      if ((lookUpResponse.translations ?? []).length == 1) {
-        lookUpResponse.translations?[0].audioUrl = tSpeakUrl;
+      translations =
+          (translation as List).map((v) => TextTranslation(text: v)).toList();
+      if (translations.length == 1) {
+        translations[0] = translations[0].copyWith(audioUrl: tSpeakUrl);
       }
     }
 
     if (returnPhrase != null) {
-      lookUpResponse.word = returnPhrase[0];
+      word = returnPhrase[0];
     }
 
     if (basic != null) {
@@ -109,12 +123,12 @@ class YoudaoTranslationEngine extends TranslationEngine {
       var wfs = basic['wfs'];
 
       if (examType != null) {
-        lookUpResponse.tags = (examType as List).map((e) {
+        tags = (examType as List).map((e) {
           return WordTag(name: e);
         }).toList();
       }
       if (explains != null) {
-        lookUpResponse.definitions = (explains as List).map((e) {
+        definitions = (explains as List).map((e) {
           String def = e.toString();
           int dotIndex = def.indexOf('. ');
           String? name = dotIndex >= 0 ? def.substring(0, dotIndex + 1) : null;
@@ -128,7 +142,7 @@ class YoudaoTranslationEngine extends TranslationEngine {
         }).toList();
       }
 
-      lookUpResponse.pronunciations = [
+      pronunciations = [
         WordPronunciation(
             type: 'uk',
             phoneticSymbol: basic['uk-phonetic'],
@@ -144,7 +158,7 @@ class YoudaoTranslationEngine extends TranslationEngine {
           .toList();
 
       if (wfs != null) {
-        lookUpResponse.tenses = (wfs as List).map((e) {
+        tenses = (wfs as List).map((e) {
           var wf = e['wf'];
           String name = wf['name'];
           String value = wf['value'];
@@ -162,8 +176,7 @@ class YoudaoTranslationEngine extends TranslationEngine {
       }
     }
 
-    if ((lookUpResponse.definitions ?? []).isNotEmpty ||
-        (lookUpResponse.pronunciations ?? []).isNotEmpty) {
+    if ((definitions ?? []).isNotEmpty || (pronunciations ?? []).isNotEmpty) {
       Uri uri2 = Uri.https(
         'picdict.youdao.com',
         '/search',
@@ -178,7 +191,7 @@ class YoudaoTranslationEngine extends TranslationEngine {
         Map<String, dynamic> data2 = json.decode(response2.body);
 
         if (data2['data']['pic'] != null) {
-          lookUpResponse.images = (data2['data']['pic'] as List)
+          images = (data2['data']['pic'] as List)
               .map((e) => WordImage(url: e['url']))
               .toList();
         }
@@ -187,7 +200,18 @@ class YoudaoTranslationEngine extends TranslationEngine {
       }
     }
 
-    return lookUpResponse;
+    return LookUpResponse(
+      translations: translations,
+      word: word,
+      tip: tip,
+      tags: tags,
+      definitions: definitions,
+      pronunciations: pronunciations,
+      images: images,
+      phrases: phrases,
+      tenses: tenses,
+      sentences: sentences,
+    );
   }
 
   @override

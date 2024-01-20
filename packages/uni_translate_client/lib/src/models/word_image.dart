@@ -1,19 +1,17 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'word_image.g.dart';
+
+@JsonSerializable()
 class WordImage {
   WordImage({
     required this.url,
   });
 
-  factory WordImage.fromJson(Map<String, dynamic> json) {
-    return WordImage(
-      url: json['url'],
-    );
-  }
+  factory WordImage.fromJson(Map<String, dynamic> json) =>
+      _$WordImageFromJson(json);
 
-  String url;
+  final String url;
 
-  Map<String, dynamic> toJson() {
-    return {
-      'url': url,
-    }..removeWhere((key, value) => value == null);
-  }
+  Map<String, dynamic> toJson() => _$WordImageToJson(this);
 }
