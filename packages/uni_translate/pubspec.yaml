@@ -1,6 +1,6 @@
 name: uni_translate
 description: A universal translate client.
-version: 0.1.4
+version: 0.1.5
 homepage: https://github.com/biyidev/uni_translate
 
 environment:

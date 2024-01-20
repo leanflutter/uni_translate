@@ -1,6 +1,6 @@
 name: translation_engine_tencent
 description: Tencent translation engine
-version: 0.1.3
+version: 0.1.5
 homepage: https://github.com/biyidev/uni_translate
 
 environment:
@@ -8,7 +8,7 @@ environment:
 
 dependencies:
   crypto: ^3.0.3
-  http: ^0.13.6
+  http: ^1.1.2
   uni_translate_client: ^0.1.3
 
 dev_dependencies:

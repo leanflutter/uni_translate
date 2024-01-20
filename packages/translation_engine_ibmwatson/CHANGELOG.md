@@ -1,3 +1,7 @@
+## 0.1.5
+
+* chore: Bump `http` to 1.1.2
+
 ## 0.1.3
 
 * bump uni_translate_client to 0.1.3
