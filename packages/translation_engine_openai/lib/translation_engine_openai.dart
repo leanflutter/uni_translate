@@ -64,13 +64,21 @@ class OpenAITranslationEngine extends TranslationEngine {
       messages: [
         OpenAIChatCompletionChoiceMessageModel(
           role: OpenAIChatMessageRole.system,
-          content: _optionPrompt
-              .replaceFirst('\${sourceLanguage}', request.sourceLanguage!)
-              .replaceFirst('\${targetLanguage}', request.targetLanguage!),
+          content: [
+            OpenAIChatCompletionChoiceMessageContentItemModel.text(
+              _optionPrompt
+                  .replaceFirst('\${sourceLanguage}', request.sourceLanguage!)
+                  .replaceFirst('\${targetLanguage}', request.targetLanguage!),
+            ),
+          ],
         ),
         OpenAIChatCompletionChoiceMessageModel(
           role: OpenAIChatMessageRole.user,
-          content: request.text,
+          content: [
+            OpenAIChatCompletionChoiceMessageContentItemModel.text(
+              request.text,
+            ),
+          ],
         )
       ],
     );
@@ -79,8 +87,8 @@ class OpenAITranslationEngine extends TranslationEngine {
     chatCompletionModel.listen(
       (streamChatCompletion) {
         final content = streamChatCompletion.choices.first.delta.content;
-        if (content == null) return;
-        translatedText += content;
+        if (content == null || content.isEmpty) return;
+        translatedText += content.first.text!;
 
         TextTranslation textTranslation;
         if (translateResponse.translations == null) {

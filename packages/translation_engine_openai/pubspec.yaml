@@ -1,11 +1,11 @@
 name: translation_engine_openai
 description: OpenAI translation engine
-version: 0.1.4
+version: 0.1.5
 homepage: https://github.com/biyidev/uni_translate
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
-  dart_openai: ^2.0.1
+  dart_openai: ^5.0.0
   uni_translate_client: ^0.1.3
