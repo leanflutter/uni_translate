@@ -16,9 +16,9 @@ String _base64(String data) {
 
 class IBMWatsonTranslationEngine extends TranslationEngine {
   IBMWatsonTranslationEngine({
-    required String identifier,
-    Map<String, dynamic>? option,
-  }) : super(identifier: identifier, option: option);
+    required super.identifier,
+    super.option,
+  });
 
   static List<String> optionKeys = [
     _kEngineOptionKeyApiKey,

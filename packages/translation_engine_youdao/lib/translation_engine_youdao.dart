@@ -22,9 +22,9 @@ String _sha256(String data) {
 
 class YoudaoTranslationEngine extends TranslationEngine {
   YoudaoTranslationEngine({
-    required String identifier,
-    Map<String, dynamic>? option,
-  }) : super(identifier: identifier, option: option);
+    required super.identifier,
+    super.option,
+  });
 
   static List<String> optionKeys = [
     _kEngineOptionKeyAppKey,
@@ -144,17 +144,21 @@ class YoudaoTranslationEngine extends TranslationEngine {
 
       pronunciations = [
         WordPronunciation(
-            type: 'uk',
-            phoneticSymbol: basic['uk-phonetic'],
-            audioUrl: basic['uk-speech']),
+          type: 'uk',
+          phoneticSymbol: basic['uk-phonetic'],
+          audioUrl: basic['uk-speech'],
+        ),
         WordPronunciation(
-            type: 'us',
-            phoneticSymbol: basic['us-phonetic'],
-            audioUrl: basic['us-speech']),
+          type: 'us',
+          phoneticSymbol: basic['us-phonetic'],
+          audioUrl: basic['us-speech'],
+        ),
       ]
-          .where((e) =>
-              (e.phoneticSymbol ?? '').isNotEmpty ||
-              (e.audioUrl ?? '').isNotEmpty)
+          .where(
+            (e) =>
+                (e.phoneticSymbol ?? '').isNotEmpty ||
+                (e.audioUrl ?? '').isNotEmpty,
+          )
           .toList();
 
       if (wfs != null) {

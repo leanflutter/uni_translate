@@ -14,7 +14,7 @@ part 'look_up_response.g.dart';
 @JsonSerializable()
 class LookUpResponse extends TranslateResponse {
   const LookUpResponse({
-    List<TextTranslation> translations = const [],
+    super.translations,
     this.word,
     this.tip,
     this.tags,
@@ -24,7 +24,7 @@ class LookUpResponse extends TranslateResponse {
     this.phrases,
     this.tenses,
     this.sentences,
-  }) : super(translations: translations);
+  });
 
   factory LookUpResponse.fromJson(Map<String, dynamic> json) =>
       _$LookUpResponseFromJson(json);

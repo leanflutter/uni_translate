@@ -18,9 +18,10 @@ String _md5(String data) {
 
 class BaiduTranslationEngine extends TranslationEngine {
   BaiduTranslationEngine({
-    required String identifier,
-    Map<String, dynamic>? option,
-  }) : super(identifier: identifier, option: option);
+    required super.identifier,
+    super.option,
+  });
+
   static List<String> optionKeys = [
     _kEngineOptionKeyAppId,
     _kEngineOptionKeyAppKey,
@@ -82,10 +83,13 @@ class BaiduTranslationEngine extends TranslationEngine {
       },
     );
 
-    var response = await http.post(uri, headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Accept': 'application/json',
-    });
+    final response = await http.post(
+      uri,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json',
+      },
+    );
     Map<String, dynamic> data = json.decode(utf8.decode(response.bodyBytes));
 
     if (data['error_code'] != null && data['error_code'] != 0) {
@@ -135,10 +139,13 @@ class BaiduTranslationEngine extends TranslationEngine {
       },
     );
 
-    var response = await http.post(uri, headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Accept': 'application/json',
-    });
+    final response = await http.post(
+      uri,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json',
+      },
+    );
     Map<String, dynamic> data = json.decode(utf8.decode(response.bodyBytes));
 
     if (data['error_code'] != null && data['error_code'] != 0) {

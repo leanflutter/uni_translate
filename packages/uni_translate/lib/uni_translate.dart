@@ -9,3 +9,5 @@ export 'package:translation_engine_openai/translation_engine_openai.dart';
 export 'package:translation_engine_tencent/translation_engine_tencent.dart';
 export 'package:translation_engine_youdao/translation_engine_youdao.dart';
 export 'package:uni_translate_client/uni_translate_client.dart';
+
+export 'src/uni_translate.dart';

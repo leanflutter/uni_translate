@@ -17,9 +17,9 @@ const String _kDefaultPrompt =
 
 class OpenAITranslationEngine extends TranslationEngine {
   OpenAITranslationEngine({
-    required String identifier,
-    Map<String, dynamic>? option,
-  }) : super(identifier: identifier, option: option);
+    required super.identifier,
+    super.option,
+  });
 
   static List<String> optionKeys = [
     _kEngineOptionKeyBaseUrl,
@@ -86,7 +86,7 @@ class OpenAITranslationEngine extends TranslationEngine {
               request.text,
             ),
           ],
-        )
+        ),
       ],
     );
 
@@ -95,7 +95,7 @@ class OpenAITranslationEngine extends TranslationEngine {
       (streamChatCompletion) {
         final content = streamChatCompletion.choices.first.delta.content;
         if (content == null || content.isEmpty) return;
-        translatedText += content.first.text!;
+        translatedText += content.first?.text ?? '';
 
         final textTranslation = TextTranslation(text: translatedText);
         if (translateResponse.translations.isEmpty) {

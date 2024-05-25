@@ -13,6 +13,7 @@ abstract class TranslationEngine {
     this.option,
   });
 
+  String get id => identifier;
   String get type => throw UnimplementedError();
   List<TranslationEngineScope> get supportedScopes =>
       throw UnimplementedError();

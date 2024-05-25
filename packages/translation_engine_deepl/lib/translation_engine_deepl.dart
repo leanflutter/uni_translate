@@ -29,9 +29,10 @@ const Map<String, String> _knownErrors = {
 
 class DeepLTranslationEngine extends TranslationEngine {
   DeepLTranslationEngine({
-    required String identifier,
-    Map<String, dynamic>? option,
-  }) : super(identifier: identifier, option: option);
+    required super.identifier,
+    super.option,
+  });
+
   static List<String> optionKeys = [
     _kEngineOptionKeyAuthKey,
   ];
@@ -73,9 +74,12 @@ class DeepLTranslationEngine extends TranslationEngine {
     String host = _isDeepLFree ? 'api-free.deepl.com' : 'api.deepl.com';
     var uri = Uri.https(host, '/v2/translate', queryParameters);
 
-    var response = await http.post(uri, headers: {
-      HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8'
-    });
+    final response = await http.post(
+      uri,
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
+      },
+    );
 
     String? errorMessage;
 
@@ -85,10 +89,12 @@ class DeepLTranslationEngine extends TranslationEngine {
       if (data['translations'] != null) {
         Iterable l = data['translations'] as List;
         translations = l
-            .map((e) => TextTranslation(
-                  detectedSourceLanguage: e['detected_source_language'],
-                  text: e['text'],
-                ))
+            .map(
+              (e) => TextTranslation(
+                detectedSourceLanguage: e['detected_source_language'],
+                text: e['text'],
+              ),
+            )
             .toList();
       }
 

@@ -12,9 +12,9 @@ const String _kEngineOptionKeyApiKey = 'apiKey';
 
 class IcibaTranslationEngine extends TranslationEngine {
   IcibaTranslationEngine({
-    required String identifier,
-    Map<String, dynamic>? option,
-  }) : super(identifier: identifier, option: option);
+    required super.identifier,
+    super.option,
+  });
 
   static List<String> optionKeys = [
     _kEngineOptionKeyApiKey,
@@ -101,9 +101,11 @@ class IcibaTranslationEngine extends TranslationEngine {
           audioUrl: symbol['ph_am_mp3'],
         ),
       ]
-          .where((e) =>
-              (e.phoneticSymbol ?? '').isNotEmpty ||
-              (e.audioUrl ?? '').isNotEmpty)
+          .where(
+            (e) =>
+                (e.phoneticSymbol ?? '').isNotEmpty ||
+                (e.audioUrl ?? '').isNotEmpty,
+          )
           .toList();
     }
 

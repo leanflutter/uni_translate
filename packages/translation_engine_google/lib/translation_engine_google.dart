@@ -12,9 +12,9 @@ const String _kEngineOptionKeyApiKey = 'apiKey';
 
 class GoogleTranslationEngine extends TranslationEngine {
   GoogleTranslationEngine({
-    required String identifier,
-    Map<String, dynamic>? option,
-  }) : super(identifier: identifier, option: option);
+    required super.identifier,
+    super.option,
+  });
 
   static List<String> optionKeys = [
     _kEngineOptionKeyApiKey,
@@ -71,7 +71,7 @@ class GoogleTranslationEngine extends TranslationEngine {
           )
           .toList();
     } catch (error) {
-      print(error);
+      throw UniTranslateClientError(message: 'Failed to parse detections');
     }
 
     return DetectLanguageResponse(

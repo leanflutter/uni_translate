@@ -12,9 +12,9 @@ const String _kEngineOptionKeyRequestId = 'requestId';
 
 class CaiyunTranslationEngine extends TranslationEngine {
   CaiyunTranslationEngine({
-    required String identifier,
-    Map<String, dynamic>? option,
-  }) : super(identifier: identifier, option: option);
+    required super.identifier,
+    super.option,
+  });
 
   static List<String> optionKeys = [
     _kEngineOptionKeyToken,
@@ -37,10 +37,10 @@ class CaiyunTranslationEngine extends TranslationEngine {
   @override
   Future<List<LanguagePair>> getSupportedLanguagePairs() {
     return Future.value([
-      LanguagePair(sourceLanguage: 'en', targetLanguage: 'zh'),
-      LanguagePair(sourceLanguage: 'ja', targetLanguage: 'zh'),
-      LanguagePair(sourceLanguage: 'zh', targetLanguage: 'en'),
-      LanguagePair(sourceLanguage: 'zh', targetLanguage: 'ja'),
+      const LanguagePair(sourceLanguage: 'en', targetLanguage: 'zh'),
+      const LanguagePair(sourceLanguage: 'ja', targetLanguage: 'zh'),
+      const LanguagePair(sourceLanguage: 'zh', targetLanguage: 'en'),
+      const LanguagePair(sourceLanguage: 'zh', targetLanguage: 'ja'),
     ]);
   }
 

@@ -21,9 +21,9 @@ String _signature(String key, String data) {
 
 class TencentTranslationEngine extends TranslationEngine {
   TencentTranslationEngine({
-    required String identifier,
-    Map<String, dynamic>? option,
-  }) : super(identifier: identifier, option: option);
+    required super.identifier,
+    super.option,
+  });
 
   static List<String> optionKeys = [
     _kEngineOptionKeySecretId,
