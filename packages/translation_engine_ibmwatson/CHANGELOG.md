@@ -1,3 +1,7 @@
+## 0.1.6
+
+* some bug fixes
+
 ## 0.1.5
 
 * chore: Bump `http` to 1.1.2

@@ -1,6 +1,6 @@
 name: translation_engine_caiyun
 description: Caiyun translation engine
-version: 0.1.5
+version: 0.1.6
 homepage: https://github.com/biyidev/uni_translate
 
 environment:
