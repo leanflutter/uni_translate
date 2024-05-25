@@ -1,3 +1,7 @@
+## 0.1.6
+
+* some bug fixes
+
 ## 0.1.4
 
 * bump translation_engine_openai to 0.1.4

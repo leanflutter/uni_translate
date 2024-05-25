@@ -1,3 +1,7 @@
+## 0.1.6
+
+* some bug fixes
+
 ## 0.1.3
 
 * feat: Support for streaming output
