@@ -1,3 +1,7 @@
+## 0.1.7
+
+* some optimizations
+
 ## 0.1.6
 
 * some bug fixes
